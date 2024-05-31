@@ -1,4 +1,4 @@
-package tup2024.src.main.java.ar.edu.utn.frbb.tup;
+package ar.edu.utn.frbb.tup.model;
 
 import java.time.LocalDate;
 import java.util.List;

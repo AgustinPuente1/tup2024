@@ -1,4 +1,4 @@
-package tup2024.src.main.java.ar.edu.utn.frbb.tup;
+package ar.edu.utn.frbb.tup.model;
 
 public class Direccion {
     private String calle;
