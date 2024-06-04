@@ -6,6 +6,7 @@ public class MovimientosCuenta {
     private String tipoOperacion; //descripcion de la operacion
     private float monto;
     private LocalDateTime fechaHora;
+    private TipoMoneda moneda;
     
     public MovimientosCuenta(String tipoOperacion, float monto, LocalDateTime fechaHora) {
         this.tipoOperacion = tipoOperacion;
