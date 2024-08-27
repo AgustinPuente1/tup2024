@@ -1,15 +1,15 @@
-package ar.edu.utn.frbb.tup.controllers;
+package ar.edu.utn.frbb.tup.controllers.Dto;
 
 import java.time.LocalDate;
 
-import ar.edu.utn.frbb.tup.model.Direccion;
+import ar.edu.utn.frbb.tup.model.Domicilio;
 
 public class PersonaDto {
     private String nombre;
     private String apellido;
     private long dni;
     private LocalDate fechaNacimiento;
-    private Direccion domicilio;
+    private Domicilio domicilio;
     private String mail;
     private String telefono;
 
@@ -45,10 +45,10 @@ public class PersonaDto {
     }
 
 
-    public Direccion getDomicilio() {
+    public Domicilio getDomicilio() {
         return domicilio;
     }
-    public void setDomicilio(Direccion domicilio) {
+    public void setDomicilio(Domicilio domicilio) {
         this.domicilio = domicilio;
     }
 

@@ -1,10 +1,10 @@
 package ar.edu.utn.frbb.tup.model;
 
-public class Direccion {
+public class Domicilio {
     private String calle;
     private int altura;
     
-    public Direccion(String calle, int altura) {
+    public Domicilio(String calle, int altura) {
         this.calle = calle;
         this.altura = altura;
     }

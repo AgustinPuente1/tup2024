@@ -3,7 +3,7 @@ package ar.edu.utn.frbb.tup.presentation.input;
 import java.time.LocalDate;
 import java.util.Scanner;
 import ar.edu.utn.frbb.tup.model.Cliente;
-import ar.edu.utn.frbb.tup.model.Direccion;
+import ar.edu.utn.frbb.tup.model.Domicilio;
 import ar.edu.utn.frbb.tup.model.TipoCliente;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteAlreadyExistsException;
 import ar.edu.utn.frbb.tup.persistence.ClienteDao;
@@ -108,7 +108,7 @@ public class ClienteInput extends LimpiarScreen{
             mailStr = scanner.nextLine();
         }
 
-        Cliente cliente = new Cliente(TipoCliente.PERSONA_FISICA,nombreStr,apellidoStr,dni, fecha, new Direccion(calleStr, altura),telefonoStr, mailStr);
+        Cliente cliente = new Cliente(TipoCliente.PERSONA_FISICA,nombreStr,apellidoStr,dni, fecha, new Domicilio(calleStr, altura),telefonoStr, mailStr);
         try {
             ClienteService.agregarCliente(cliente);
         } catch (ClienteAlreadyExistsException e) {
@@ -188,7 +188,7 @@ public class ClienteInput extends LimpiarScreen{
             mailStr = scanner.nextLine();
         }
 
-        Cliente cliente = new Cliente(TipoCliente.PERSONA_JURIDICA, nombreStr, cuit, fecha, new Direccion(calleStr, altura), telefonoStr, mailStr);
+        Cliente cliente = new Cliente(TipoCliente.PERSONA_JURIDICA, nombreStr, cuit, fecha, new Domicilio(calleStr, altura), telefonoStr, mailStr);
         try {
             ClienteService.agregarCliente(cliente);
         } catch (ClienteAlreadyExistsException e) {

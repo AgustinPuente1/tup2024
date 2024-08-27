@@ -1,4 +1,4 @@
-package ar.edu.utn.frbb.tup.controllers;
+package ar.edu.utn.frbb.tup.controllers.Dto;
 
 import ar.edu.utn.frbb.tup.model.TipoCliente;
 

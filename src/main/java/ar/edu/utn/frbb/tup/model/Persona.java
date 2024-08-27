@@ -8,12 +8,12 @@ public class Persona {
     private String apellido;
     private long dni;
     private LocalDate fechaNacimiento;
-    private Direccion domicilio;
+    private Domicilio domicilio;
     private String mail;
     private String telefono;
 
 
-    public Persona(String nombre, String apellido, long dni, LocalDate fechaNacimiento, Direccion domicilio,
+    public Persona(String nombre, String apellido, long dni, LocalDate fechaNacimiento, Domicilio domicilio,
             String mail, String telefono) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -77,10 +77,10 @@ public class Persona {
         this.telefono = telefono;
     }
 
-    public Direccion getDomicilio() {
+    public Domicilio getDomicilio() {
         return domicilio;
     }
-    public void setDomicilio(Direccion domicilio) {
+    public void setDomicilio(Domicilio domicilio) {
         this.domicilio = domicilio;
     }
 

@@ -17,15 +17,44 @@
 
 COMPLETE:
 -ClienteDto y PersonaDto
--Cliente y Persona
+-Cliente y Persona model
+-CuentaBancaria y CBDto
+-Tranferencias y TDto
 
 In progress:
--CuentaBancaria
+-Transacciones y TDto
+-Estruturar los CRUD
 
 To do List:
--Banco
+-Hacer que transferencias y transacciones se agreguen a banco
+-Hacer bien los enum Tipo
+-Handler y Validator en controllers
 -Rehacer service
 -Rehacer persistence
 -Borrar presentation
--Hacer controllers, ClienteCOntroller, CuentaController
+-Hacer controllers, ClienteController, CuentaController
 -Hacer test unitarios
+
+
+GET/POST/PUT/DELETE
+
+Clientes
+GET /api/cliente   Obtener todos los clientes
+GET /api/cliente/{id}  Obtener cliente individual
+POST /api/cliente   Crear cliente
+PUT /api/cliente/{id}  Modificar cliente
+DELETE /api/cliente/{id}   Borrar cliente
+
+Cuentas 
+GET /api/cuenta    Obtener todas las cuentas
+GET /api/cuentas/{titular}  Obtener cuentas de cliente
+GET /api/cuenta/{cuentaId}/transacciones   Obtener transfers
+POST /api/cuentas/{titular}  Crea cuenta de cliente
+PUT /api/cuentas/{titular}/{cuentaId}    Actualiza cuenta
+DELETE /api/cuentas/{titular}/{cuentaId}     Borra cuenta
+
+Transfer
+GET /api/transfer   Obtener todos las transferencias
+POST /api/transfer  Hacer transferencia
+
+Transacciones
