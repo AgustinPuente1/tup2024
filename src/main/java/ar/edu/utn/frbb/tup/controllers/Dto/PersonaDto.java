@@ -1,17 +1,33 @@
-package ar.edu.utn.frbb.tup.controllers.Dto;
+package ar.edu.utn.frbb.tup.controllers.dto;
 
 import java.time.LocalDate;
 
-import ar.edu.utn.frbb.tup.model.Domicilio;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class PersonaDto {
+
+    @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
+
+    @NotBlank(message = "El apellido es obligatorio")
     private String apellido;
-    private long dni;
+
+    @NotNull(message = "El DNI es obligatorio")
+    private Long dni;
+
+    @NotNull(message = "La fecha de nacimiento es obligatoria")
     private LocalDate fechaNacimiento;
-    private Domicilio domicilio;
+
+    @NotBlank(message = "El domicilio es obligatorio")
+    private String domicilio;
+
+    @NotBlank(message = "El correo electrónico es obligatorio")
     private String mail;
+
+    @NotBlank(message = "El teléfono es obligatorio")
     private String telefono;
+
 
     public String getNombre() {
         return nombre;
@@ -45,10 +61,10 @@ public class PersonaDto {
     }
 
 
-    public Domicilio getDomicilio() {
+    public String getDomicilio() {
         return domicilio;
     }
-    public void setDomicilio(Domicilio domicilio) {
+    public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
     }
 

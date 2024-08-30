@@ -1,13 +1,10 @@
-package ar.edu.utn.frbb.tup.controllers.Dto;
-
-import ar.edu.utn.frbb.tup.model.TipoCuenta;
-import ar.edu.utn.frbb.tup.model.TipoMoneda;
+package ar.edu.utn.frbb.tup.controllers.dto;
 
 public class CuentaBancariaDto {
     private long titular;
     private float saldo;
-    private TipoCuenta tipoCuenta;
-    private TipoMoneda moneda;
+    private String tipoCuenta;
+    private String moneda;
 
     public long getTitular(){
         return titular;
@@ -24,18 +21,18 @@ public class CuentaBancariaDto {
     }
 
 
-    public TipoCuenta getTipoCuenta() {
+    public String getTipoCuenta() {
         return tipoCuenta;
     }
-    public void setTipoCuenta(TipoCuenta tipoCuenta) {
+    public void setTipoCuenta(String tipoCuenta) {
         this.tipoCuenta = tipoCuenta;
     }
 
 
-    public TipoMoneda getMoneda() {
+    public String getMoneda() {
         return moneda;
     }
-    public void setMoneda(TipoMoneda moneda) {
+    public void setMoneda(String moneda) {
         this.moneda = moneda;
     }
 }

@@ -1,12 +1,10 @@
-package ar.edu.utn.frbb.tup.controllers.Dto;
-
-import ar.edu.utn.frbb.tup.model.TipoMoneda;
+package ar.edu.utn.frbb.tup.controllers.dto;
 
 public class TransferenciasDto {
     private long cuentaOrigen;
     private long cuentaDestino;
     private float monto;
-    private TipoMoneda moneda;
+    private String moneda;
 
     public long getCuentaOrigen() {
         return cuentaOrigen;
@@ -32,10 +30,10 @@ public class TransferenciasDto {
     }
 
     
-    public TipoMoneda getMoneda() {
+    public String getMoneda() {
         return moneda;
     }
-    public void setMoneda(TipoMoneda moneda) {
+    public void setMoneda(String moneda) {
         this.moneda = moneda;
     }
 

@@ -1,15 +1,16 @@
-package ar.edu.utn.frbb.tup.controllers.Dto;
+package ar.edu.utn.frbb.tup.controllers.dto;
 
-import ar.edu.utn.frbb.tup.model.TipoCliente;
+import jakarta.validation.constraints.NotBlank;
 
 public class ClienteDto extends PersonaDto{
-    private TipoCliente tipo;
+    @NotBlank(message = "El tipo de cliente es obligatorio (Fisica 'F' o Juridica 'J')")
+    private String tipo;
 
-    public TipoCliente getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoCliente tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 }
