@@ -1,18 +1,5 @@
 # tup2024final
 -CuentaBancaria validaciones: Saldo > 0.
--CuentaBancaria inversiones que puedas hacer una transaccion de dinero para comprar inversiones y generar plata.
-
--USAR INTERFACES PARA IMPLEMENTAR METODOS. 
-
--Reestructurar CuentaBancaria.
--Reestructurar MovimientosCuenta.
--Unir MovimientosCuenta con CuentaBancaria.
--Unir Cliente con CuentaBancaria.
--Hacer la base de datos de todo el banco.
--Hacer los input para que devuelva datos.
--Agregar funcionalidades a CuentaBancaria y MovimientosCuenta.
-
-
 
 
 COMPLETE:
@@ -22,16 +9,22 @@ COMPLETE:
 -Tranferencias y TDto
 -Transacciones y TDto
 -Estructurar los CRUD
+-Hacer bien los enum Tipo
+-ClienteValidator y @Valid en controllers
+-Handler en controllers de Valid globales
 
 In progress:
--ClienteValidator
--Validator en controllers
+-aplication.properties
+-ClienteController
+-ClienteService
+-ClienteDao
+
 
 To do List:
--Handler en controllers
+-Corregir los enums de CuentaB Transacciones y Transferencias
 -HACER ID CORRECTA A CUENTAB, TRANSACCIONES Y TRANSFERENCIAS
 -Hacer que transferencias y transacciones se agreguen a banco
--Hacer bien los enum Tipo
+-Hacer que los Service y Persistence sean interfaces con implemets @Service
 -Rehacer service
 -Rehacer persistence
 -Borrar presentation
