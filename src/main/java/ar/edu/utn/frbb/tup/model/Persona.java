@@ -8,18 +8,16 @@ public class Persona {
     private String apellido;
     private long dni;
     private LocalDate fechaNacimiento;
-    private Domicilio domicilio;
     private String mail;
     private String telefono;
 
 
-    public Persona(String nombre, String apellido, long dni, LocalDate fechaNacimiento, Domicilio domicilio,
+    public Persona(String nombre, String apellido, long dni, LocalDate fechaNacimiento,
             String mail, String telefono) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.fechaNacimiento = fechaNacimiento;
-        this.domicilio = domicilio;
         this.mail = mail;
         this.telefono = telefono;
     }
@@ -75,13 +73,6 @@ public class Persona {
     }
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public Domicilio getDomicilio() {
-        return domicilio;
-    }
-    public void setDomicilio(Domicilio domicilio) {
-        this.domicilio = domicilio;
     }
 
 

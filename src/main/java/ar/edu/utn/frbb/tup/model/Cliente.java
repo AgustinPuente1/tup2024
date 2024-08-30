@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import ar.edu.utn.frbb.tup.controllers.Dto.ClienteDto;
+import ar.edu.utn.frbb.tup.controllers.dto.ClienteDto;
 
 
 public class Cliente extends Persona{
@@ -14,20 +14,15 @@ public class Cliente extends Persona{
     private Set<CuentaBancaria> cuentas;
 
     public Cliente(ClienteDto clienteDto){
-        super(clienteDto.getNombre(), clienteDto.getApellido(), clienteDto.getDni(), clienteDto.getFechaNacimiento(), clienteDto.getDomicilio(), clienteDto.getMail(), clienteDto.getTelefono());
-        this.tipo = clienteDto.getTipo();
+        super(clienteDto.getNombre(), clienteDto.getApellido(), clienteDto.getDni(), clienteDto.getFechaNacimiento(), clienteDto.getMail(), clienteDto.getTelefono());
+        if (clienteDto.getTipo().equals("F")){
+            this.tipo = TipoCliente.PERSONA_FISICA;
+        }else{
+            this.tipo = TipoCliente.PERSONA_JURIDICA;
+        }
         this.banco = "Banco TUP";
         this.fechaAlta = LocalDate.now();
         this.cuentas = new HashSet<>();
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente [tipo=" + tipo + ", banco=" + banco + ", fechaAlta=" + fechaAlta + ", cuentas=" + cuentas
-                + ", getNombre()=" + getNombre() + ", getApellido()=" + getApellido() + ", getDni()=" + getDni()
-                + ", getFechaNacimiento()=" + getFechaNacimiento() + ", getMail()=" + getMail() + ", getClass()="
-                + getClass() + ", getTelefono()=" + getTelefono() + ", getDomicilio()=" + getDomicilio()
-                + ", getEdad()=" + getEdad() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
     }
 
 
