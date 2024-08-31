@@ -3,11 +3,9 @@ package ar.edu.utn.frbb.tup.model;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.apache.tomcat.jni.Library;
+import ar.edu.utn.frbb.tup.controllers.dto.CuentaBancariaDto;
 
 import java.util.ArrayList;
-
-import ar.edu.utn.frbb.tup.controllers.Dto.CuentaBancariaDto;
 
 public class CuentaBancaria {
     private long titular; //Dto
@@ -23,8 +21,16 @@ public class CuentaBancaria {
         this.titular = cuentaBancariaDto.getTitular();
         this.idCuenta = 0;
         this.saldo = cuentaBancariaDto.getSaldo();
-        this.tipoCuenta = cuentaBancariaDto.getTipoCuenta();
-        this.moneda = cuentaBancariaDto.getMoneda();
+        if (cuentaBancariaDto.getTipoCuenta() == "CC") {
+            this.tipoCuenta = TipoCuenta.CUENTA_CORRIENTE;
+        } else {
+            this.tipoCuenta = TipoCuenta.CAJA_AHORRO;
+        }
+        if (cuentaBancariaDto.getMoneda() == "USD") {
+            this.moneda = TipoMoneda.DOLARES;
+        } else  {
+            this.moneda = TipoMoneda.PESOS;
+        }
         this.fechaApertura = LocalDate.now();
         this.transferencias = new ArrayList<>();
         this.transacciones = new ArrayList<>();

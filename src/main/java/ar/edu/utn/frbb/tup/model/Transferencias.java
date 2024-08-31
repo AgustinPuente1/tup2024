@@ -2,9 +2,10 @@ package ar.edu.utn.frbb.tup.model;
 
 import java.time.LocalDate;
 
-import ar.edu.utn.frbb.tup.controllers.Dto.TransferenciasDto;
+import ar.edu.utn.frbb.tup.controllers.dto.TransferenciasDto;
 
 public class Transferencias {
+    private long idTransferencia;
     private long cuentaOrigen; 
     private long cuentaDestino;
     private float monto;
@@ -12,11 +13,23 @@ public class Transferencias {
     private LocalDate fechaHora;
 
     public Transferencias(TransferenciasDto transferenciasDto) {
+        this.idTransferencia = 0;
         this.cuentaOrigen = transferenciasDto.getCuentaOrigen();
         this.cuentaDestino = transferenciasDto.getCuentaDestino();
         this.monto = transferenciasDto.getMonto();
-        this.moneda = transferenciasDto.getMoneda();
+        if (transferenciasDto.getMoneda().equals("USD")) {
+            this.moneda = TipoMoneda.DOLARES;
+        } else {
+            this.moneda = TipoMoneda.PESOS;
+        }
         this.fechaHora = LocalDate.now();
+    }
+
+    public long getIdTransferencia() {
+        return idTransferencia;
+    }
+    public void setIdTransferencia(long idTransferencia) {
+        this.idTransferencia = idTransferencia;
     }
 
     public long getCuentaOrigen() {
