@@ -53,7 +53,7 @@ public class ClienteValidator {
     }
 
     public void validateTipo(String tipo) throws DatoNoValidoException{
-        if (!tipo.equalsIgnoreCase(tipo)) {
+        if (tipo.toUpperCase() != "F"  ||  tipo.toUpperCase() != "J") {
             throw new DatoNoValidoException(tipo + " no es un tipo valido");
         }
     }

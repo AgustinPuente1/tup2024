@@ -1,42 +1,20 @@
 package ar.edu.utn.frbb.tup.persistence;
 
-import java.util.Map;
-
 import ar.edu.utn.frbb.tup.model.Cliente;
-import ar.edu.utn.frbb.tup.persistence.entity.ClienteEntity;
+import ar.edu.utn.frbb.tup.model.exceptions.ClienteAlreadyExistsException;
+import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 
-public class ClienteDao {
-    public static void saveCliente(Cliente cliente){
-        ClienteEntity.save(cliente);
-    }
+import java.util.List;
 
-    public static Cliente findXID(Long id){
-        Map<Long, Cliente> clientesDataBase = ClienteEntity.dataBase();
-        if (clientesDataBase.containsKey(id)){
-            return clientesDataBase.get(id);
-        }
-        return null;
-    }
+public interface ClienteDao {
+    List<Cliente> getAllClientes();
 
-    public static Map<Long, Cliente> findClientes(){
-        return ClienteEntity.dataBase();
-    }
+    Cliente getCliente(long dni) throws ClienteNoExisteException;
 
-    public static boolean existCliente(Cliente cliente){
-        Map<Long, Cliente> clientesDataBase = findClientes();
-        if (clientesDataBase.containsValue(cliente)){
-            return true;
-        } else {
-            return false;
-        }
-    }
+    Cliente createCliente(Cliente cliente) throws ClienteAlreadyExistsException;
 
-    public static boolean existClienteXID(Long id){
-        Map<Long, Cliente> clientesDataBase = findClientes();
-        if (clientesDataBase.containsKey(id)){
-            return true;
-        } else {
-            return false;
-        }
-    }
+    Cliente updateCliente(Cliente cliente) throws ClienteNoExisteException;
+
+    void deleteCliente(long dni) throws ClienteNoExisteException;
+
 }

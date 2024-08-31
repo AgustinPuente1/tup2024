@@ -1,6 +1,9 @@
 # tup2024final
 -CuentaBancaria validaciones: Saldo > 0.
 
+#notas
+metodos service en español
+metodos dao en ingles
 
 COMPLETE:
 -ClienteDto y PersonaDto
@@ -12,23 +15,23 @@ COMPLETE:
 -Hacer bien los enum Tipo
 -ClienteValidator y @Valid en controllers
 -Handler en controllers de Valid globales
+-aplication.properties puerto y ruta
+-Corregir los enums de CuentaB Transacciones y Transferencias
+
 
 In progress:
--aplication.properties
--ClienteController
--ClienteService
 -ClienteDao
+-ClienteService
+-ClienteController
 
 
 To do List:
--Corregir los enums de CuentaB Transacciones y Transferencias
+-HACER QUE CUANDO DELETEO UN CLIENTE TAMBIEN BORRE CUENTAS
 -HACER ID CORRECTA A CUENTAB, TRANSACCIONES Y TRANSFERENCIAS
 -Hacer que transferencias y transacciones se agreguen a banco
--Hacer que los Service y Persistence sean interfaces con implemets @Service
--Rehacer service
--Rehacer persistence
--Borrar presentation
--Hacer controllers, ClienteController, CuentaController
+-Todo CuentaBancaria
+-Todo Transacciones
+-Todo Tranfers
 -Hacer test unitarios
 
 
@@ -38,6 +41,7 @@ Clientes
 GET /api/cliente   Obtener todos los clientes
 GET /api/cliente/{id}  Obtener cliente individual
 POST /api/cliente   Crear cliente
+POST /api/cliente/{id}/cuenta Crear cuentabancaria
 PUT /api/cliente/{id}  Modificar cliente
 DELETE /api/cliente/{id}   Borrar cliente
 

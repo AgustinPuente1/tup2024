@@ -19,9 +19,6 @@ public class PersonaDto {
     @NotNull(message = "La fecha de nacimiento es obligatoria")
     private LocalDate fechaNacimiento;
 
-    @NotBlank(message = "El domicilio es obligatorio")
-    private String domicilio;
-
     @NotBlank(message = "El correo electrónico es obligatorio")
     private String mail;
 
@@ -59,15 +56,6 @@ public class PersonaDto {
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-
-
-    public String getDomicilio() {
-        return domicilio;
-    }
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
-    }
-
 
     public String getMail() {
         return mail;
