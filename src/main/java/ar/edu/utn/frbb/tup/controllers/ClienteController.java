@@ -10,6 +10,8 @@ import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.DatoNoValidoException;
 import ar.edu.utn.frbb.tup.model.exceptions.EdadNoValidaException;
 import ar.edu.utn.frbb.tup.service.ClienteService;
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,54 +35,55 @@ public class ClienteController {
     private ClienteValidator clienteValidator;
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> obtenerAllClientes() {
+    public ResponseEntity <List<Cliente>> obtenerAllClientes() {
         List<Cliente> clientes = clienteService.obtenerAllClientes();
         return ResponseEntity.ok(clientes);
     }
 
     @GetMapping("/{dni}")
-    public ResponseEntity<Cliente> obtenerCliente(@PathVariable("dni") long dni) {
+    public ResponseEntity <?> obtenerCliente(@PathVariable("dni") long dni) {
         try {
             Cliente cliente = clienteService.obtenerCliente(dni);
             return ResponseEntity.ok(cliente);
         } catch (ClienteNoExisteException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> crearCliente(@RequestBody ClienteDto clienteDto) {
+    public ResponseEntity <?> crearCliente(@Valid @RequestBody ClienteDto clienteDto) {
         try {
             clienteValidator.validate(clienteDto); // Validar el ClienteDto
             Cliente cliente = clienteService.crearCliente(clienteDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
+        
         } catch (DatoNoValidoException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (ClienteAlreadyExistsException | EdadNoValidaException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
     @PutMapping("/{dni}")
-    public ResponseEntity<Cliente> actualizarCliente(@PathVariable("dni") long dni, @RequestBody ClienteDto clienteDto) {
+    public ResponseEntity <?> actualizarCliente(@Valid @PathVariable("dni") long dni, @RequestBody ClienteDto clienteDto) {
         try {
             clienteValidator.validate(clienteDto); // Validar el ClienteDto
-            Cliente cliente = clienteService.actualizarCliente(clienteDto);
+            Cliente cliente = clienteService.actualizarCliente(dni,clienteDto);
             return ResponseEntity.ok(cliente);
         } catch (DatoNoValidoException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (ClienteNoExisteException | EdadNoValidaException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
     @DeleteMapping("/{dni}")
-    public ResponseEntity<Void> borrarCliente(@PathVariable("dni") long dni) {
+    public ResponseEntity <?> borrarCliente(@PathVariable("dni") long dni) {
         try {
             clienteService.borrarCliente(dni);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok("El cliente se borró con exito");
         } catch (ClienteNoExisteException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
     

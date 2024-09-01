@@ -17,7 +17,7 @@ public interface ClienteService {
 
     Cliente crearCliente(ClienteDto clienteDto) throws ClienteAlreadyExistsException, EdadNoValidaException;
 
-    Cliente actualizarCliente(ClienteDto clienteDto) throws ClienteNoExisteException, EdadNoValidaException;
+    Cliente actualizarCliente(long dni, ClienteDto clienteDto) throws ClienteNoExisteException, EdadNoValidaException;
 
     void borrarCliente(long dni) throws ClienteNoExisteException;
 }

@@ -2,8 +2,10 @@
 -CuentaBancaria validaciones: Saldo > 0.
 
 #notas
-metodos service en español
-metodos dao en ingles
+-metodos service en español
+-metodos dao en ingles
+-se puede cambiar lso dni de los clientes
+
 
 COMPLETE:
 -ClienteDto y PersonaDto

@@ -46,7 +46,7 @@ public class ClienteServiceImp implements ClienteService {
         LocalDate fechaHoy = LocalDate.now();
         LocalDate fechaLimite = fechaHoy.minus(Period.ofYears(18));
         
-        if (!clienteDto.getFechaNacimiento().isAfter(fechaLimite)){
+        if (clienteDto.getFechaNacimiento().isAfter(fechaLimite)){
             throw new EdadNoValidaException("No se pueden registrar personas de menos de 18 años");
         }
         Cliente cliente = new Cliente(clienteDto);
@@ -58,17 +58,17 @@ public class ClienteServiceImp implements ClienteService {
     }
 
     @Override
-    public Cliente actualizarCliente(ClienteDto clienteDto) throws ClienteNoExisteException, EdadNoValidaException {
+    public Cliente actualizarCliente(long dni,ClienteDto clienteDto) throws ClienteNoExisteException, EdadNoValidaException {
         LocalDate fechaHoy = LocalDate.now();
         LocalDate fechaLimite = fechaHoy.minus(Period.ofYears(18));
         
-        if (!clienteDto.getFechaNacimiento().isAfter(fechaLimite)){
+        if (clienteDto.getFechaNacimiento().isAfter(fechaLimite)){
             throw new EdadNoValidaException("No se pueden registrar personas de menos de 18 años");
         }
 
         Cliente cliente = new Cliente(clienteDto);
         try {
-            return clienteDao.updateCliente(cliente);
+            return clienteDao.updateCliente(dni, cliente);
         } catch (ClienteNoExisteException e) {
             throw e;
         }

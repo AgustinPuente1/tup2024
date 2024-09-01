@@ -13,7 +13,7 @@ public interface ClienteDao {
 
     Cliente createCliente(Cliente cliente) throws ClienteAlreadyExistsException;
 
-    Cliente updateCliente(Cliente cliente) throws ClienteNoExisteException;
+    Cliente updateCliente(long dni, Cliente cliente) throws ClienteNoExisteException;
 
     void deleteCliente(long dni) throws ClienteNoExisteException;
 

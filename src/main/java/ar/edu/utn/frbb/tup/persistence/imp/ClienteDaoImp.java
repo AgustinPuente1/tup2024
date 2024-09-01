@@ -1,12 +1,19 @@
 package ar.edu.utn.frbb.tup.persistence.imp;
 
 import org.springframework.stereotype.Repository;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
-import java.io.File;
+import com.google.gson.reflect.TypeToken;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 
 import ar.edu.utn.frbb.tup.model.Cliente;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteAlreadyExistsException;
@@ -15,19 +22,15 @@ import ar.edu.utn.frbb.tup.persistence.ClienteDao;
 
 @Repository
 public class ClienteDaoImp implements ClienteDao{
-    private static final String JSON_FILE_PATH = "/jsonBase/clientes.json";
-
-    private ObjectMapper objectMapper;
-
-    public ClienteDaoImp() {
-        this.objectMapper = new ObjectMapper();
-    }
+    private static final String JSON_FILE_PATH = "src/main/resources/clientes.json";
+    private static final Gson gson = new GsonBuilder()
+        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+        .create();;
 
 
     public void saveClientes(List<Cliente> clientes) {
-        try {
-            // Escribir la lista de clientes en el archivo JSON
-            objectMapper.writeValue(new File(JSON_FILE_PATH), clientes);
+        try (FileWriter writer = new FileWriter(JSON_FILE_PATH)) {
+            gson.toJson(clientes, writer);
         } catch (IOException e) {
             e.printStackTrace();
             // Manejar el error adecuadamente en un entorno real
@@ -36,15 +39,17 @@ public class ClienteDaoImp implements ClienteDao{
 
     public List<Cliente> findClientes() {
         try {
-            File file = new File(JSON_FILE_PATH);
-            if (!file.exists()) {
-                return List.of();
+            if (!Files.exists(Paths.get(JSON_FILE_PATH))) {
+                return new ArrayList<>(); // Retorna una lista vacía si el archivo no existe
             }
-            // Leer la lista de clientes desde el archivo JSON
-            return objectMapper.readValue(file, new TypeReference<List<Cliente>>() {});
+
+            try (FileReader reader = new FileReader(JSON_FILE_PATH)) {
+                Type tipoListaClientes = new TypeToken<List<Cliente>>() {}.getType();
+                return gson.fromJson(reader, tipoListaClientes);
+            }
         } catch (IOException e) {
             e.printStackTrace();
-            return List.of(); // Devuelve una lista vacía en caso de error
+            return new ArrayList<>(); // Retorna una lista vacía en caso de error
         }
     }
 
@@ -76,10 +81,10 @@ public class ClienteDaoImp implements ClienteDao{
 
 
     @Override
-    public Cliente updateCliente(Cliente cliente) throws ClienteNoExisteException {
+    public Cliente updateCliente(long dni, Cliente cliente) throws ClienteNoExisteException {
         List<Cliente> clientes = findClientes();
         for (int i = 0; i < clientes.size(); i++) {
-            if (clientes.get(i).getDni() == cliente.getDni()) {
+            if (clientes.get(i).getDni() == dni) {
                 clientes.set(i, cliente);
                 saveClientes(clientes);
                 return cliente;
