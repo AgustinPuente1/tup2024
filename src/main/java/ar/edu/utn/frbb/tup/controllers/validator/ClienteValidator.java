@@ -19,9 +19,9 @@ public class ClienteValidator {
     }
 
     public void validateNombreApellido(String nombre, String apellido) throws DatoNoValidoException {
-        if (!nombre.matches("[a-zA-Z]+")) {
+        if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
             throw new DatoNoValidoException(nombre + " no es un nombre valido");
-        } else if (!apellido.matches("[a-zA-Z]+")) {
+        } else if (!apellido.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
             throw new DatoNoValidoException(apellido + " no es un apellido valido");
         }
     }

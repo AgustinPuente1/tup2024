@@ -4,7 +4,7 @@
 #notas
 -metodos service en español
 -metodos dao en ingles
--se puede cambiar lso dni de los clientes
+-se puede cambiar los dni de los clientes
 
 
 COMPLETE:
@@ -19,12 +19,13 @@ COMPLETE:
 -Handler en controllers de Valid globales
 -aplication.properties puerto y ruta
 -Corregir los enums de CuentaB Transacciones y Transferencias
-
-
-In progress:
 -ClienteDao
 -ClienteService
 -ClienteController
+-Test unitarios Cliente service y cliente dao
+
+In progress:
+
 
 
 To do List:
@@ -49,12 +50,12 @@ DELETE /api/cliente/{id}   Borrar cliente
 
 Cuentas 
 GET /api/cuenta    Obtener todas las cuentas
-GET /api/cuentas/{titular}  Obtener cuentas de cliente
+GET /api/cuenta/{titular}  Obtener cuentas de cliente
 GET /api/cuenta/{cuentaId}/transfer   Obtener transfers
 GET /api/cuenta/{cuentaId}/transaccion   Obtener transacciones
-POST /api/cuentas/{titular}  Crea cuenta de cliente
-PUT /api/cuentas/{titular}/{cuentaId}    Actualiza cuenta
-DELETE /api/cuentas/{titular}/{cuentaId}     Borra cuenta
+POST /api/cuenta/{titular}  Crea cuenta de cliente
+PUT /api/cuenta/{titular}/{cuentaId}    Actualiza cuenta
+DELETE /api/cuenta/{titular}/{cuentaId}     Borra cuenta
 
 Transfer
 GET /api/transfer   Obtener todos las transfers

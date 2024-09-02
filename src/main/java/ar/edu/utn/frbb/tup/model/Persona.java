@@ -11,6 +11,7 @@ public class Persona {
     private String mail;
     private String telefono;
 
+    public Persona() {}
 
     public Persona(String nombre, String apellido, long dni, LocalDate fechaNacimiento,
             String mail, String telefono) {

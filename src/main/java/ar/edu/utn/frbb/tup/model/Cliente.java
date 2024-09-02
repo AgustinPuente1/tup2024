@@ -13,6 +13,7 @@ public class Cliente extends Persona{
     private LocalDate fechaAlta;
     private Set<CuentaBancaria> cuentas;
 
+    //Contructor para uso común
     public Cliente(ClienteDto clienteDto){
         super(clienteDto.getNombre(), clienteDto.getApellido(), clienteDto.getDni(), clienteDto.getFechaNacimiento(), clienteDto.getMail(), clienteDto.getTelefono());
         if (clienteDto.getTipo().equals("F")){
@@ -25,6 +26,22 @@ public class Cliente extends Persona{
         this.cuentas = new HashSet<>();
     }
 
+    //Contructores para testeos
+    public Cliente(){
+        super();
+    }
+
+    public Cliente(String nombre, String apellido, long dni, LocalDate fechaNacimiento, String mail, String telefono, String tipo){
+        super(nombre, apellido, dni, fechaNacimiento, mail, telefono);
+        if (tipo.equals("F")){
+            this.tipo = TipoCliente.PERSONA_FISICA;
+        }else{
+            this.tipo = TipoCliente.PERSONA_JURIDICA;
+        }
+        this.banco = "Banco TUP";
+        this.fechaAlta = LocalDate.now();
+        this.cuentas = new HashSet<>();
+    }
 
     public TipoCliente getTipo() {
         return tipo;
