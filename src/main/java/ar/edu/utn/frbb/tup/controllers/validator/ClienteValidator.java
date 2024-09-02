@@ -30,7 +30,7 @@ public class ClienteValidator {
         if (dni < 0) {
             throw new DatoNoValidoException("DNI no puede ser negativo");
         } else if (String.valueOf(dni).length() > 8) {
-            throw new DatoNoValidoException("DNI debe ser de 8 digitos");
+            throw new DatoNoValidoException("DNI debe ser de 8 digitos o menos");
         }
     }
 

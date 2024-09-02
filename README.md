@@ -19,20 +19,18 @@ COMPLETE:
 -Handler en controllers de Valid globales
 -aplication.properties puerto y ruta
 -Corregir los enums de CuentaB Transacciones y Transferencias
--ClienteDao
--ClienteService
--ClienteController
+-Cliente controller, service y dao
 -Test unitarios Cliente service y cliente dao
 
+
 In progress:
-
-
+-CuentaBancaria controller, service y dao
+-HACER ID CORRECTA A CUENTAB, TRANSACCIONES Y TRANSFERENCIAS
 
 To do List:
+-Cliente borrar cuentas controller
 -HACER QUE CUANDO DELETEO UN CLIENTE TAMBIEN BORRE CUENTAS
--HACER ID CORRECTA A CUENTAB, TRANSACCIONES Y TRANSFERENCIAS
 -Hacer que transferencias y transacciones se agreguen a banco
--Todo CuentaBancaria
 -Todo Transacciones
 -Todo Tranfers
 -Hacer test unitarios
@@ -41,14 +39,16 @@ To do List:
 GET/POST/PUT/DELETE
 
 Clientes
-GET /api/cliente   Obtener todos los clientes
-GET /api/cliente/{id}  Obtener cliente individual
-POST /api/cliente   Crear cliente
-POST /api/cliente/{id}/cuenta Crear cuentabancaria
-PUT /api/cliente/{id}  Modificar cliente
-DELETE /api/cliente/{id}   Borrar cliente
+BORRAR CUENTAS???????
+GET /api/cliente   Obtener todos los clientes        !
+GET /api/cliente/{id}  Obtener cliente individual    !
+POST /api/cliente   Crear cliente                    !
+POST /api/cliente/{id}/cuenta Crear cuentabancaria   
+PUT /api/cliente/{id}  Modificar cliente             !
+DELETE /api/cliente/{id}   Borrar cliente            !
 
 Cuentas 
+DEPOSITOS y RETIROS??????????????
 GET /api/cuenta    Obtener todas las cuentas
 GET /api/cuenta/{titular}  Obtener cuentas de cliente
 GET /api/cuenta/{cuentaId}/transfer   Obtener transfers

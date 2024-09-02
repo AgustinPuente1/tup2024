@@ -33,7 +33,6 @@ public class ClienteDaoImp implements ClienteDao{
             gson.toJson(clientes, writer);
         } catch (IOException e) {
             e.printStackTrace();
-            // Manejar el error adecuadamente en un entorno real
         }
     }
 
