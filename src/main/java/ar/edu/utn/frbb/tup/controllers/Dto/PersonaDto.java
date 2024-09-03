@@ -14,7 +14,7 @@ public class PersonaDto {
     private String apellido;
 
     @NotNull(message = "El DNI es obligatorio")
-    private Long dni;
+    private long dni;
 
     @NotNull(message = "La fecha de nacimiento es obligatoria")
     private LocalDate fechaNacimiento;

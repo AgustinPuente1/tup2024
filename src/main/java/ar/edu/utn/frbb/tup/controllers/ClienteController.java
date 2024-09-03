@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
+
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
@@ -33,6 +35,14 @@ public class ClienteController {
 
     @Autowired
     private ClienteValidator clienteValidator;
+
+    /*
+    GET /api/cliente   Obtener todos los clientes        !
+    GET /api/cliente/{id}  Obtener cliente individual    !
+    POST /api/cliente   Crear cliente                    !
+    PUT /api/cliente/{id}  Modificar cliente             !
+    DELETE /api/cliente/{id}   Borrar cliente            !
+    */
 
     @GetMapping
     public ResponseEntity <List<Cliente>> obtenerAllClientes() {

@@ -61,6 +61,9 @@ public class CuentaBancaria {
     public void addDeposito(float monto) {
         this.saldo += monto;
     }
+    public void addRetiro(float monto) {
+        this.saldo -= monto;
+    }
 
 
     public TipoCuenta getTipoCuenta() {

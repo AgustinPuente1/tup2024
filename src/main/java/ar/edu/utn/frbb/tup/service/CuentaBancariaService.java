@@ -6,21 +6,27 @@ import ar.edu.utn.frbb.tup.controllers.dto.CuentaBancariaDto;
 import ar.edu.utn.frbb.tup.model.CuentaBancaria;
 import ar.edu.utn.frbb.tup.model.Transacciones;
 import ar.edu.utn.frbb.tup.model.Transferencias;
+import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
+import ar.edu.utn.frbb.tup.model.exceptions.CuentaAlreadyExistsException;
+import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
+import ar.edu.utn.frbb.tup.model.exceptions.SaldoNoValidoException;
 
 public interface CuentaBancariaService {
     List<CuentaBancaria> obtenerAllCuentas();
 
-    List<CuentaBancaria> obtenerCuentasPorTitular(Long titular);
+    List<CuentaBancaria> obtenerCuentasPorTitular(long titular) throws CuentaNoExisteException;
 
-    CuentaBancaria obtenerCuentaPorId(Long id);
+    CuentaBancaria obtenerCuentaPorId(long id) throws CuentaNoExisteException;
 
-    List<Transacciones> obtenerTransaccionesPorCuenta(Long id);
+    List<Transacciones> obtenerTransaccionesPorId(long id) throws CuentaNoExisteException;
     
-    List<Transferencias> obtenerTransferenciasPorCuenta(Long id);
+    List<Transferencias> obtenerTransferenciasPorId(long id) throws CuentaNoExisteException;
 
-    CuentaBancaria crearCuenta(CuentaBancariaDto cuentaBancariaDto);
+    CuentaBancaria crearCuenta(CuentaBancariaDto cuentaBancariaDto) throws ClienteNoExisteException, CuentaAlreadyExistsException, SaldoNoValidoException;
 
-    CuentaBancaria actualizarCuenta(Long id, CuentaBancariaDto cuentaBancariaDto);
+    CuentaBancaria agregarDeposito(long id, float monto) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException;
 
-    void borrarCuenta(Long id);
+    CuentaBancaria agregarRetiro(long id, float monto) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException;
+
+    void borrarCuenta(long id) throws CuentaNoExisteException, ClienteNoExisteException;
 }

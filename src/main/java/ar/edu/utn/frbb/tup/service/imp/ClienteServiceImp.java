@@ -33,12 +33,8 @@ public class ClienteServiceImp implements ClienteService {
     }
 
     @Override
-    public Cliente obtenerCliente(long dni) throws ClienteNoExisteException {
-        try {
-            return clienteDao.getCliente(dni);
-        } catch (ClienteNoExisteException e) {
-            throw e;
-        }
+    public Cliente obtenerCliente(long dni) throws ClienteNoExisteException { 
+        return clienteDao.getCliente(dni);
     }
 
     @Override

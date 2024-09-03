@@ -67,6 +67,9 @@ public class Cliente extends Persona{
     public void addCuentas(CuentaBancaria cuenta){ 
         this.cuentas.add(cuenta);
     }
+    public void deleteCuenta(CuentaBancaria cuenta){ 
+        this.cuentas.remove(cuenta);
+    }
 
     
 }

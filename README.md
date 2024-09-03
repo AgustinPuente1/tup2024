@@ -21,18 +21,20 @@ COMPLETE:
 -Corregir los enums de CuentaB Transacciones y Transferencias
 -Cliente controller, service y dao
 -Test unitarios Cliente service y cliente dao
-
+-CuentaBancaria controller, service y dao
+-HACER ID CORRECTA A CUENTAB
+-Verificar en service si el cliente ya tiene una cuenta de cc o ca en ars o usd
 
 In progress:
--CuentaBancaria controller, service y dao
--HACER ID CORRECTA A CUENTAB, TRANSACCIONES Y TRANSFERENCIAS
+-Test unitarios y test controllers
 
 To do List:
+-Todo Transacciones
+-Todo Tranfers
+-ID de TRANSACCIONES Y TRANSFERENCIAS
 -Cliente borrar cuentas controller
 -HACER QUE CUANDO DELETEO UN CLIENTE TAMBIEN BORRE CUENTAS
 -Hacer que transferencias y transacciones se agreguen a banco
--Todo Transacciones
--Todo Tranfers
 -Hacer test unitarios
 
 
@@ -43,17 +45,17 @@ BORRAR CUENTAS???????
 GET /api/cliente   Obtener todos los clientes        !
 GET /api/cliente/{id}  Obtener cliente individual    !
 POST /api/cliente   Crear cliente                    !
-POST /api/cliente/{id}/cuenta Crear cuentabancaria   
 PUT /api/cliente/{id}  Modificar cliente             !
 DELETE /api/cliente/{id}   Borrar cliente            !
 
 Cuentas 
-DEPOSITOS y RETIROS??????????????
 GET /api/cuenta    Obtener todas las cuentas
 GET /api/cuenta/{titular}  Obtener cuentas de cliente
 GET /api/cuenta/{cuentaId}/transfer   Obtener transfers
 GET /api/cuenta/{cuentaId}/transaccion   Obtener transacciones
 POST /api/cuenta/{titular}  Crea cuenta de cliente
+POST /api/cuenta/{cuentaId}/deposito  crea un deposito
+POST /api/cuenta/{cuentaId}/retiro   crea un retiro
 PUT /api/cuenta/{titular}/{cuentaId}    Actualiza cuenta
 DELETE /api/cuenta/{titular}/{cuentaId}     Borra cuenta
 
