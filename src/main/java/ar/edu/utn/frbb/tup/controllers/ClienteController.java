@@ -7,6 +7,7 @@ import ar.edu.utn.frbb.tup.controllers.validator.ClienteValidator;
 import ar.edu.utn.frbb.tup.model.Cliente;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteAlreadyExistsException;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
+import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.DatoNoValidoException;
 import ar.edu.utn.frbb.tup.model.exceptions.EdadNoValidaException;
 import ar.edu.utn.frbb.tup.service.ClienteService;
@@ -92,7 +93,7 @@ public class ClienteController {
         try {
             clienteService.borrarCliente(dni);
             return ResponseEntity.ok("El cliente se borró con exito");
-        } catch (ClienteNoExisteException e) {
+        } catch (ClienteNoExisteException | CuentaNoExisteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }

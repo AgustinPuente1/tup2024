@@ -2,10 +2,13 @@ package ar.edu.utn.frbb.tup.persistence;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 
 import ar.edu.utn.frbb.tup.model.Cliente;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteAlreadyExistsException;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
+import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
 import ar.edu.utn.frbb.tup.persistence.imp.ClienteDaoImp;
 
 import java.time.LocalDate;
@@ -14,15 +17,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ClienteDaoTest {
 
+    @InjectMocks
     private ClienteDaoImp clienteDao;
 
     @BeforeEach
     public void setUp() {
-        clienteDao = new ClienteDaoImp();
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testCrearYObtenerCliente() throws ClienteAlreadyExistsException, ClienteNoExisteException {
+    public void testCrearYObtenerCliente() throws ClienteAlreadyExistsException, ClienteNoExisteException, CuentaNoExisteException {
         //Testea el create y el get
         Cliente cliente = new Cliente("Juan", "Perez", 12345678L, LocalDate.of(1990, 1, 1), "juan@mail.com", "+5491112345678", "F");
         
@@ -45,7 +49,7 @@ public class ClienteDaoTest {
     }
 
     @Test
-    public void testBorrarCliente() throws ClienteNoExisteException, ClienteAlreadyExistsException {
+    public void testBorrarCliente() throws ClienteNoExisteException, ClienteAlreadyExistsException, CuentaNoExisteException {
         //Testea si puede borrar por id correctamente
         Cliente cliente = new Cliente("Juan", "Perez", 12345678L, LocalDate.of(1990, 1, 1), "juan@mail.com", "+5491112345678", "F");
         try {
@@ -62,7 +66,7 @@ public class ClienteDaoTest {
     }
 
     @Test
-    public void testClienteYaExiste() throws ClienteNoExisteException {
+    public void testClienteYaExiste() throws ClienteNoExisteException, CuentaNoExisteException {
         //Testea si cliente existe
         Cliente cliente = new Cliente("Juan", "Perez", 12345678L, LocalDate.of(1990, 1, 1), "juan@mail.com", "+5491112345678", "F");
         
@@ -83,7 +87,7 @@ public class ClienteDaoTest {
     }
 
     @Test
-    public void testActualizarCliente() throws ClienteNoExisteException, ClienteAlreadyExistsException {
+    public void testActualizarCliente() throws ClienteNoExisteException, ClienteAlreadyExistsException, CuentaNoExisteException {
         //Testea el poder actualizar clientes
         Cliente cliente = new Cliente("Juan", "Perez", 12345678L, LocalDate.of(1990, 1, 1), "juan@mail.com", "+5491112345678", "F");
         try {

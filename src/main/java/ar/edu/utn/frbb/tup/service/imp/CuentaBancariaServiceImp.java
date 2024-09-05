@@ -14,6 +14,7 @@ import ar.edu.utn.frbb.tup.model.Transferencias;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaAlreadyExistsException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
+import ar.edu.utn.frbb.tup.model.exceptions.MonedaNoCoincideException;
 import ar.edu.utn.frbb.tup.model.exceptions.SaldoNoValidoException;
 import ar.edu.utn.frbb.tup.persistence.ClienteDao;
 import ar.edu.utn.frbb.tup.persistence.CuentaBancariaDao;
@@ -21,11 +22,6 @@ import ar.edu.utn.frbb.tup.service.CuentaBancariaService;
 
 @Service
 public class CuentaBancariaServiceImp implements CuentaBancariaService {
-    /*
-    validaciones
-    -titular existe
-    -saldos negativos
-     */
 
     private CuentaBancariaDao cuentaBancariaDao;
     private ClienteDao clienteDao;
@@ -41,11 +37,6 @@ public class CuentaBancariaServiceImp implements CuentaBancariaService {
     @Override
     public List<CuentaBancaria> obtenerAllCuentas(){
         return cuentaBancariaDao.getAllCuentasBancarias();
-    }
-
-    @Override
-    public List<CuentaBancaria> obtenerCuentasPorTitular(long dni) throws CuentaNoExisteException {
-        return cuentaBancariaDao.getCuentasBancariasByDni(dni);
     }
      
     @Override
@@ -80,14 +71,13 @@ public class CuentaBancariaServiceImp implements CuentaBancariaService {
         }
 
         cuentaBancariaDao.createCuentaBancaria(cuentaBancaria);
-        cliente.addCuentas(cuentaBancaria);
-        clienteDao.updateCliente(cliente.getDni(), cliente);
+
 
         return cuentaBancaria;
     }
 
     @Override
-    public CuentaBancaria agregarDeposito(long id, float monto) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException {
+    public CuentaBancaria agregarDeposito(long id, float monto, String moneda) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException {
         if (monto < 0){
             throw new SaldoNoValidoException("El saldo no puede ser negativo");
         }
@@ -97,9 +87,10 @@ public class CuentaBancariaServiceImp implements CuentaBancariaService {
 
         for (CuentaBancaria c : cliente.getCuentas()) {
             if (c.getIdCuenta() == id){
-                c.addDeposito(monto);
-                cuenta.addDeposito(monto);
-                clienteDao.updateCliente(cuenta.getTitular(), cliente);
+                if (!c.getMoneda().getValue().equals(moneda)){
+                    throw new MonedaNoCoincideException("La moneda no coincide, si la cuenta es en USD la moneda debe ser USD, y al reves");
+                }
+                cuenta = cuentaBancariaDao.addDeposito(cliente, id, monto);
                 return cuenta;
             }
         }
@@ -107,7 +98,7 @@ public class CuentaBancariaServiceImp implements CuentaBancariaService {
     }
 
     @Override
-    public CuentaBancaria agregarRetiro(long id, float monto) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException {
+    public CuentaBancaria agregarRetiro(long id, float monto, String moneda) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException{
         if (monto < 0){
             throw new SaldoNoValidoException("El saldo no puede ser negativo");
         }
@@ -121,9 +112,10 @@ public class CuentaBancariaServiceImp implements CuentaBancariaService {
 
         for (CuentaBancaria c : cliente.getCuentas()) {
             if (c.getIdCuenta() == id){
-                c.addRetiro(monto);
-                cuenta.addRetiro(monto);
-                clienteDao.updateCliente(cuenta.getTitular(), cliente);
+                if (!c.getMoneda().getValue().equals(moneda)){
+                    throw new MonedaNoCoincideException("La moneda no coincide, si la cuenta es en USD la moneda debe ser USD, y al reves");
+                }
+               cuenta = cuentaBancariaDao.addRetiro(cliente, id, monto);
                 return cuenta;
             }
         }
@@ -137,9 +129,7 @@ public class CuentaBancariaServiceImp implements CuentaBancariaService {
 
         for (CuentaBancaria c : cliente.getCuentas()) {
             if (c.getIdCuenta() == id){
-                cliente.deleteCuenta(cuenta);
-                cuentaBancariaDao.deleteCuentaBancaria(id);
-                clienteDao.updateCliente(cuenta.getTitular(), cliente);
+                cuentaBancariaDao.deleteCuentaBancaria(cliente, id);
                 return;
             }
         }

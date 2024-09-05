@@ -9,12 +9,11 @@ import ar.edu.utn.frbb.tup.model.Transferencias;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaAlreadyExistsException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
+import ar.edu.utn.frbb.tup.model.exceptions.MonedaNoCoincideException;
 import ar.edu.utn.frbb.tup.model.exceptions.SaldoNoValidoException;
 
 public interface CuentaBancariaService {
     List<CuentaBancaria> obtenerAllCuentas();
-
-    List<CuentaBancaria> obtenerCuentasPorTitular(long titular) throws CuentaNoExisteException;
 
     CuentaBancaria obtenerCuentaPorId(long id) throws CuentaNoExisteException;
 
@@ -24,9 +23,9 @@ public interface CuentaBancariaService {
 
     CuentaBancaria crearCuenta(CuentaBancariaDto cuentaBancariaDto) throws ClienteNoExisteException, CuentaAlreadyExistsException, SaldoNoValidoException;
 
-    CuentaBancaria agregarDeposito(long id, float monto) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException;
+    CuentaBancaria agregarDeposito(long id, float monto, String moneda) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException;
 
-    CuentaBancaria agregarRetiro(long id, float monto) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException;
+    CuentaBancaria agregarRetiro(long id, float monto, String moneda) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException;
 
     void borrarCuenta(long id) throws CuentaNoExisteException, ClienteNoExisteException;
 }

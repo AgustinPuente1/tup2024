@@ -11,7 +11,9 @@ import ar.edu.utn.frbb.tup.controllers.dto.ClienteDto;
 import ar.edu.utn.frbb.tup.model.Cliente;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteAlreadyExistsException;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
+import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
 import ar.edu.utn.frbb.tup.persistence.ClienteDao;
+import ar.edu.utn.frbb.tup.persistence.CuentaBancariaDao;
 import ar.edu.utn.frbb.tup.service.ClienteService;
 import ar.edu.utn.frbb.tup.model.exceptions.EdadNoValidaException;
 
@@ -19,10 +21,12 @@ import ar.edu.utn.frbb.tup.model.exceptions.EdadNoValidaException;
 public class ClienteServiceImp implements ClienteService {
 
     private ClienteDao clienteDao;
+    private CuentaBancariaDao cuentaBancariaDao;
 
     @Autowired
-    public ClienteServiceImp(ClienteDao clienteDao) {
+    public ClienteServiceImp(ClienteDao clienteDao, CuentaBancariaDao cuentaBancariaDao) {
         this.clienteDao = clienteDao;
+        this.cuentaBancariaDao = cuentaBancariaDao;
     }
 
 
@@ -71,8 +75,8 @@ public class ClienteServiceImp implements ClienteService {
     }
 
     @Override
-    public void borrarCliente(long dni) throws ClienteNoExisteException {
-        //HACER QUE CUANDO DELETEO UN CLIENTE TAMBIEN BORRE CUENTAS
+    public void borrarCliente(long dni) throws ClienteNoExisteException, CuentaNoExisteException {
+        cuentaBancariaDao.deleteCuentasPorTitular(dni);
         try {
             clienteDao.deleteCliente(dni);
         } catch (ClienteNoExisteException e) {

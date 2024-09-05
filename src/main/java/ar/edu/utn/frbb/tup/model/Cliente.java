@@ -68,7 +68,11 @@ public class Cliente extends Persona{
         this.cuentas.add(cuenta);
     }
     public void deleteCuenta(CuentaBancaria cuenta){ 
-        this.cuentas.remove(cuenta);
+        for (CuentaBancaria c : this.cuentas){
+            if (c.getIdCuenta() == cuenta.getIdCuenta()){
+                this.cuentas.remove(c);
+            }
+        }
     }
 
     

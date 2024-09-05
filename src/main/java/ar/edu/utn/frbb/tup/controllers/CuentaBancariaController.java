@@ -23,6 +23,7 @@ import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaAlreadyExistsException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.DatoNoValidoException;
+import ar.edu.utn.frbb.tup.model.exceptions.MonedaNoCoincideException;
 import ar.edu.utn.frbb.tup.model.exceptions.SaldoNoValidoException;
 import ar.edu.utn.frbb.tup.service.CuentaBancariaService;
 import jakarta.validation.Valid;
@@ -53,16 +54,6 @@ public class CuentaBancariaController {
     public ResponseEntity <List<CuentaBancaria>> obtenerAllCuentas() {
         List<CuentaBancaria> cuentas = cuentaBancariaService.obtenerAllCuentas();
         return ResponseEntity.ok(cuentas);
-    }
-
-    @GetMapping("/{titular}")
-    public ResponseEntity <?> obtenerCuentasPorTitular(@PathVariable("titular") long titular) {
-        try {
-            List<CuentaBancaria> cuentas = cuentaBancariaService.obtenerCuentasPorTitular(titular);
-            return ResponseEntity.ok(cuentas);
-        } catch (CuentaNoExisteException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
     }
 
     @GetMapping("/{cuentaId}")
@@ -111,11 +102,11 @@ public class CuentaBancariaController {
     @PostMapping("/{cuentaId}/deposito")
     public ResponseEntity <?> crearDeposito(@PathVariable("cuentaId") long cuentaId, @Valid @RequestBody DepositoRetiroDto depositoRetiroDto) {
         try {
-            CuentaBancaria cuenta = cuentaBancariaService.agregarDeposito(cuentaId, depositoRetiroDto.getMonto());
+            CuentaBancaria cuenta = cuentaBancariaService.agregarDeposito(cuentaId, depositoRetiroDto.getMonto(), depositoRetiroDto.getMoneda());
             return ResponseEntity.status(HttpStatus.CREATED).body(cuenta);
         } catch (CuentaNoExisteException | ClienteNoExisteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (SaldoNoValidoException e) {
+        } catch (SaldoNoValidoException | MonedaNoCoincideException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
@@ -123,11 +114,11 @@ public class CuentaBancariaController {
     @PostMapping("/{cuentaId}/retiro")
     public ResponseEntity <?> crearRetiro(@PathVariable("cuentaId") long cuentaId, @Valid @RequestBody DepositoRetiroDto depositoRetiroDto) {
         try {
-            CuentaBancaria cuenta = cuentaBancariaService.agregarRetiro(cuentaId, depositoRetiroDto.getMonto());
+            CuentaBancaria cuenta = cuentaBancariaService.agregarRetiro(cuentaId, depositoRetiroDto.getMonto(), depositoRetiroDto.getMoneda());
             return ResponseEntity.status(HttpStatus.CREATED).body(cuenta);
         } catch (CuentaNoExisteException | ClienteNoExisteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (SaldoNoValidoException e) {
+        } catch (SaldoNoValidoException| MonedaNoCoincideException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }

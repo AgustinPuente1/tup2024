@@ -21,12 +21,33 @@ public class CuentaBancaria {
         this.titular = cuentaBancariaDto.getTitular();
         this.idCuenta = 0;
         this.saldo = cuentaBancariaDto.getSaldo();
-        if (cuentaBancariaDto.getTipoCuenta() == "CC") {
+        if (cuentaBancariaDto.getTipoCuenta().equals("CC")) {
             this.tipoCuenta = TipoCuenta.CUENTA_CORRIENTE;
         } else {
             this.tipoCuenta = TipoCuenta.CAJA_AHORRO;
         }
-        if (cuentaBancariaDto.getMoneda() == "USD") {
+        if (cuentaBancariaDto.getMoneda().equals("USD")) {
+            this.moneda = TipoMoneda.DOLARES;
+        } else  {
+            this.moneda = TipoMoneda.PESOS;
+        }
+        this.fechaApertura = LocalDate.now();
+        this.transferencias = new ArrayList<>();
+        this.transacciones = new ArrayList<>();
+    }
+
+    //Contructor para testeos
+
+    public CuentaBancaria(long titular, float saldo, String strTipoCuenta, String strMoneda) {
+        this.titular = titular;
+        this.idCuenta = 0;
+        this.saldo = saldo;
+        if (strTipoCuenta.equals("CC")) {
+            this.tipoCuenta = TipoCuenta.CUENTA_CORRIENTE;
+        } else {
+            this.tipoCuenta = TipoCuenta.CAJA_AHORRO;
+        }
+        if (strMoneda.equals("USD")) {
             this.moneda = TipoMoneda.DOLARES;
         } else  {
             this.moneda = TipoMoneda.PESOS;

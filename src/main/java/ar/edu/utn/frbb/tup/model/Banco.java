@@ -11,9 +11,12 @@ public class Banco {
     private List<Transacciones> transacciones;
     private List<Transferencias> transferencias;
 
-    private static final float limiteSobregiro = 100000;
+    //limite de saldo negativo
+    private static final float LIMITE_SOBREGIRO = -100000;
+
+    public static final float COMISION_TRANSFER_ARS = 0.02f;
 
     public float getLimiteSobregiro() {
-        return limiteSobregiro;
+        return LIMITE_SOBREGIRO;
     }
 }

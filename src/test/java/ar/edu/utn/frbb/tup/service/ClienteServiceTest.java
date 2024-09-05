@@ -11,6 +11,7 @@ import ar.edu.utn.frbb.tup.model.Cliente;
 import ar.edu.utn.frbb.tup.controllers.dto.ClienteDto;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteAlreadyExistsException;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
+import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.EdadNoValidaException;
 import ar.edu.utn.frbb.tup.service.imp.ClienteServiceImp;
 
@@ -19,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class ClienteServiceTest {
@@ -120,10 +123,20 @@ public class ClienteServiceTest {
     }
 
     @Test
-    public void testBorrarCliente() throws ClienteNoExisteException {
+    public void testBorrarCliente() throws ClienteNoExisteException, CuentaNoExisteException {
         //Test para ver si borra cliente
-        doNothing().when(clienteDao).deleteCliente(12345678L);
+        ClienteDto clienteDto = new ClienteDto();
+        clienteDto.setFechaNacimiento(LocalDate.of(2000, 1, 1));
+        clienteDto.setDni(12345678L);
+        clienteDto.setTipo("F");
+        clienteDto.setNombre("Agustin");
+        clienteDto.setApellido("Puente");
+        clienteDto.setMail("a@a.com");
+        clienteDto.setTelefono("123456789");
 
+        Cliente expectedCliente = new Cliente(clienteDto);
+        when(clienteDao.getCliente(12345678L)).thenReturn(expectedCliente);
+        doNothing().when(clienteDao).deleteCliente(12345678L);
         clienteService.borrarCliente(12345678L);
 
         verify(clienteDao, times(1)).deleteCliente(12345678L);

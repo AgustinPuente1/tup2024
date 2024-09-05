@@ -1,5 +1,6 @@
 package ar.edu.utn.frbb.tup.persistence.imp;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import com.google.gson.reflect.TypeToken;
 import java.io.FileReader;
@@ -18,10 +18,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 
+import ar.edu.utn.frbb.tup.model.Cliente;
 import ar.edu.utn.frbb.tup.model.CuentaBancaria;
 import ar.edu.utn.frbb.tup.model.Transacciones;
 import ar.edu.utn.frbb.tup.model.Transferencias;
+import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
+import ar.edu.utn.frbb.tup.persistence.ClienteDao;
 import ar.edu.utn.frbb.tup.persistence.CuentaBancariaDao;
 
 @Repository
@@ -30,6 +33,14 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
     private static final Gson gson = new GsonBuilder()
         .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
         .create();
+
+
+    private ClienteDao clienteDao;
+
+    @Autowired
+    public CuentaBancariaDaoImp(ClienteDao clienteDao) {
+        this.clienteDao = clienteDao;
+    }
 
     public void saveCuentas(List<CuentaBancaria> cuentas) {
         try (FileWriter writer = new FileWriter(JSON_FILE_PATH)) {
@@ -60,20 +71,6 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
         return findCuentas();
     }
 
-    @Override 
-    public List<CuentaBancaria> getCuentasBancariasByDni(long dni) throws CuentaNoExisteException {
-        // Filtra las cuentas y recolecta todas las que tiene de titular el dni
-        List<CuentaBancaria> cuentas = findCuentas();
-        List<CuentaBancaria> cuentasXDni = cuentas.stream()
-            .filter(cuenta -> cuenta.getTitular() == dni)
-            .collect(Collectors.toList());
-
-        if (cuentasXDni.isEmpty()) {
-            throw new CuentaNoExisteException("No se encontraron cuentas bancarias para el DNI " + dni);
-        }
-
-        return cuentasXDni;    
-    }
 
     @Override
     public CuentaBancaria getCuentaBancariaById(long id) throws CuentaNoExisteException {
@@ -98,9 +95,9 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
     }
 
     @Override
-    public CuentaBancaria createCuentaBancaria(CuentaBancaria cuentaBancaria) {
+    public CuentaBancaria createCuentaBancaria(CuentaBancaria cuentaBancaria) throws ClienteNoExisteException {
         List<CuentaBancaria> cuentas = findCuentas();
-        while (cuentaBancaria.getIdCuenta() != 0) {
+        while (cuentaBancaria.getIdCuenta() == 0) {
             Random randomNum = new Random();
             long randomId = 1000000L + randomNum.nextInt(9000000);
             try {
@@ -110,34 +107,77 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
                 break;
             }
         }
+
+        Cliente cliente = clienteDao.getCliente(cuentaBancaria.getTitular());
+        
+        cliente.addCuentas(cuentaBancaria);
+        clienteDao.updateCliente(cliente.getDni(), cliente);
+
         cuentas.add(cuentaBancaria);
         saveCuentas(cuentas);
+
         return cuentaBancaria;
     }
 
     @Override
-    public CuentaBancaria addDeposito(long id, float monto) throws CuentaNoExisteException {
+    public CuentaBancaria addDeposito(Cliente cliente, long id, float monto) throws CuentaNoExisteException, ClienteNoExisteException {
         List<CuentaBancaria> cuentas = findCuentas();
-        CuentaBancaria cuenta = getCuentaBancariaById(id);
-        cuenta.addDeposito(monto);
+        for (CuentaBancaria c : cliente.getCuentas()) {
+            if (c.getIdCuenta() == id) {
+                c.addDeposito(monto);
+                break;
+            }
+        }
+        for (CuentaBancaria c : cuentas) {
+            if (c.getIdCuenta() == id) {
+                c.addDeposito(monto);
+                break;
+            }
+        }
+        clienteDao.updateCliente(cliente.getDni(), cliente);
         saveCuentas(cuentas);
+        CuentaBancaria cuenta = getCuentaBancariaById(id);
         return cuenta;
     }
  
     @Override
-    public CuentaBancaria addRetiro(long id, float monto) throws CuentaNoExisteException {
+    public CuentaBancaria addRetiro(Cliente cliente, long id, float monto) throws CuentaNoExisteException, ClienteNoExisteException {
         List<CuentaBancaria> cuentas = findCuentas();
-        CuentaBancaria cuenta = getCuentaBancariaById(id);
-        cuenta.addRetiro(monto);
+        for (CuentaBancaria c : cliente.getCuentas()) {
+            if (c.getIdCuenta() == id) {
+                c.addRetiro(monto);
+                break;
+            }
+        }
+        for (CuentaBancaria c : cuentas) {
+            if (c.getIdCuenta() == id) {
+                c.addRetiro(monto);
+                break;
+            }
+        }
+        clienteDao.updateCliente(cliente.getDni(), cliente);
         saveCuentas(cuentas);
+        CuentaBancaria cuenta = getCuentaBancariaById(id);
         return cuenta;
     }
 
     @Override
-    public void deleteCuentaBancaria(long id) throws CuentaNoExisteException {
+    public void deleteCuentaBancaria(Cliente cliente, long id) throws CuentaNoExisteException, ClienteNoExisteException {
         List<CuentaBancaria> cuentas = findCuentas();
-        CuentaBancaria cuenta = getCuentaBancariaById(id);
-        cuentas.remove(cuenta);
+        CuentaBancaria cuentaB = getCuentaBancariaById(id);
+
+        cliente.getCuentas().removeIf(cuenta -> cuenta.getIdCuenta() == id);
+        cuentas.removeIf(cuenta -> cuenta.getIdCuenta() == id);
+        
+        clienteDao.updateCliente(cuentaB.getTitular(), cliente);
+        saveCuentas(cuentas);
+    }
+
+    public void deleteCuentasPorTitular(long dni){
+        List<CuentaBancaria> cuentas = findCuentas();
+
+        cuentas.removeIf(cuenta -> cuenta.getTitular() == dni);
+
         saveCuentas(cuentas);
     }
 }

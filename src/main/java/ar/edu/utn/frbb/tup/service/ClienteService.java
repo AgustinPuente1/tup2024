@@ -6,6 +6,7 @@ import ar.edu.utn.frbb.tup.controllers.dto.ClienteDto;
 import ar.edu.utn.frbb.tup.model.Cliente;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteAlreadyExistsException;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
+import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.EdadNoValidaException;
 
 
@@ -19,5 +20,5 @@ public interface ClienteService {
 
     Cliente actualizarCliente(long dni, ClienteDto clienteDto) throws ClienteNoExisteException, EdadNoValidaException;
 
-    void borrarCliente(long dni) throws ClienteNoExisteException;
+    void borrarCliente(long dni) throws ClienteNoExisteException, CuentaNoExisteException;
 }
