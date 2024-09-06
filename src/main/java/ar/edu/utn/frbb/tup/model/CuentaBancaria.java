@@ -21,12 +21,14 @@ public class CuentaBancaria {
         this.titular = cuentaBancariaDto.getTitular();
         this.idCuenta = 0;
         this.saldo = cuentaBancariaDto.getSaldo();
-        if (cuentaBancariaDto.getTipoCuenta().equals("CC")) {
+        if (cuentaBancariaDto.getTipoCuenta().equalsIgnoreCase("CC")
+            || cuentaBancariaDto.getTipoCuenta().equalsIgnoreCase("CUENTA CORRIENTE")) {
             this.tipoCuenta = TipoCuenta.CUENTA_CORRIENTE;
         } else {
             this.tipoCuenta = TipoCuenta.CAJA_AHORRO;
         }
-        if (cuentaBancariaDto.getMoneda().equals("USD")) {
+        if (cuentaBancariaDto.getMoneda().equalsIgnoreCase("USD") 
+            || cuentaBancariaDto.getMoneda().equalsIgnoreCase("DOLARES")) {
             this.moneda = TipoMoneda.DOLARES;
         } else  {
             this.moneda = TipoMoneda.PESOS;

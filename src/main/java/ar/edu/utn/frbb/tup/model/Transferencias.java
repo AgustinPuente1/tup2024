@@ -5,32 +5,27 @@ import java.time.LocalDate;
 import ar.edu.utn.frbb.tup.controllers.dto.TransferenciasDto;
 
 public class Transferencias {
-    private long idTransferencia;
     private long cuentaOrigen; 
     private long cuentaDestino;
     private float monto;
     private TipoMoneda moneda;
     private LocalDate fechaHora;
+    private float comision;
 
     public Transferencias(TransferenciasDto transferenciasDto) {
-        this.idTransferencia = 0;
         this.cuentaOrigen = transferenciasDto.getCuentaOrigen();
         this.cuentaDestino = transferenciasDto.getCuentaDestino();
         this.monto = transferenciasDto.getMonto();
-        if (transferenciasDto.getMoneda().equals("USD")) {
+        if (transferenciasDto.getMoneda().equalsIgnoreCase("USD") 
+            || transferenciasDto.getMoneda().equalsIgnoreCase("DOLARES")) {
             this.moneda = TipoMoneda.DOLARES;
         } else {
             this.moneda = TipoMoneda.PESOS;
         }
         this.fechaHora = LocalDate.now();
+        this.comision = 0;
     }
 
-    public long getIdTransferencia() {
-        return idTransferencia;
-    }
-    public void setIdTransferencia(long idTransferencia) {
-        this.idTransferencia = idTransferencia;
-    }
 
     public long getCuentaOrigen() {
         return cuentaOrigen;
@@ -67,6 +62,14 @@ public class Transferencias {
         this.fechaHora = fechaHora;
     }
 
-    
 
+    public float getComision() {
+        return comision;
+    }
+    public void setComision(float comision) {
+        this.comision = comision;
+    }
+
+    
+    
 }

@@ -66,6 +66,7 @@ public class ClienteServiceImp implements ClienteService {
             throw new EdadNoValidaException("No se pueden registrar personas de menos de 18 años");
         }
 
+        //ACA BORRA LAS CUENTAS
         Cliente cliente = new Cliente(clienteDto);
         try {
             return clienteDao.updateCliente(dni, cliente);

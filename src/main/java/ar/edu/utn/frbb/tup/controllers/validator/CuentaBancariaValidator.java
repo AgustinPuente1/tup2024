@@ -14,22 +14,25 @@ public class CuentaBancariaValidator {
     }
 
     public void validateTitular(long dni) throws DatoNoValidoException {
-        if (dni < 0) {
-            throw new DatoNoValidoException("DNI no puede ser negativo");
+        if (dni < 1) {
+            throw new DatoNoValidoException("DNI no puede ser negativo o 0");
         } else if (String.valueOf(dni).length() > 8) {
             throw new DatoNoValidoException("DNI debe ser de 8 digitos o menos");
         }
     }
 
     public void validateTipo(String tipo) throws DatoNoValidoException{
-        if (!tipo.equalsIgnoreCase("CC") && !tipo.equalsIgnoreCase("CA")) {
-            throw new DatoNoValidoException(tipo + " no es un tipo valido");
+        if (!tipo.equalsIgnoreCase("CC") && !tipo.equalsIgnoreCase("CA") 
+            && !tipo.equalsIgnoreCase("CUENTA CORRIENTE") && !tipo.equalsIgnoreCase("CAJA DE AHORRO")){ 
+            throw new DatoNoValidoException(tipo + " no es un tipo valido (CC, CA, CUENTA CORRIENTE o CAJA DE AHORRO)");
         }
     }
 
     public void validateMoneda(String moneda) throws DatoNoValidoException{
-        if (!moneda.equalsIgnoreCase("ARS") && !moneda.equalsIgnoreCase("USD")) {
-            throw new DatoNoValidoException(moneda + " no es una moneda valida");
+        if (!moneda.equalsIgnoreCase("USD") && !moneda.equalsIgnoreCase("ARS") 
+                && !moneda.equalsIgnoreCase("DOLARES") && !moneda.equalsIgnoreCase("PESOS")){
+            throw new DatoNoValidoException(moneda + " no es una moneda valida (USD, ARS, DOLARES o PESOS)");
         }
     }
 }
+

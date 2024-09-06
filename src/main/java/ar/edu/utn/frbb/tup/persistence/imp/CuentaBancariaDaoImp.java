@@ -173,10 +173,44 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
         saveCuentas(cuentas);
     }
 
+    @Override
     public void deleteCuentasPorTitular(long dni){
         List<CuentaBancaria> cuentas = findCuentas();
 
         cuentas.removeIf(cuenta -> cuenta.getTitular() == dni);
+
+        saveCuentas(cuentas);
+    }
+
+    @Override 
+    public void addTransferBetweenBanks(Transferencias transferencia) {
+        List<CuentaBancaria> cuentas = findCuentas();
+
+        for (CuentaBancaria c : cuentas) {
+            if (c.getIdCuenta() == transferencia.getCuentaOrigen()) {
+                c.setSaldo(c.getSaldo() - transferencia.getMonto());
+                c.addTransferencia(transferencia);
+                break;
+            }
+        }   
+
+        saveCuentas(cuentas);
+    }
+
+    @Override
+    public void addTransferInBank(Transferencias transferencia) {
+        List<CuentaBancaria> cuentas = findCuentas();
+
+        for (CuentaBancaria c : cuentas) {
+            if (c.getIdCuenta() == transferencia.getCuentaOrigen()) {
+                c.addTransferencia(transferencia);
+                break;
+            } else if (c.getIdCuenta() == transferencia.getCuentaDestino()) {
+                c.setSaldo(c.getSaldo() + transferencia.getMonto());
+                c.addTransferencia(transferencia);
+                break;
+            }
+        }
 
         saveCuentas(cuentas);
     }

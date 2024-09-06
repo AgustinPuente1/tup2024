@@ -27,8 +27,8 @@ public class ClienteValidator {
     }
 
     public void validateDni(long dni) throws DatoNoValidoException {
-        if (dni < 0) {
-            throw new DatoNoValidoException("DNI no puede ser negativo");
+        if (dni < 1) {
+            throw new DatoNoValidoException("DNI no puede ser negativo o 0");
         } else if (String.valueOf(dni).length() > 8) {
             throw new DatoNoValidoException("DNI debe ser de 8 digitos o menos");
         }
@@ -53,7 +53,8 @@ public class ClienteValidator {
     }
 
     public void validateTipo(String tipo) throws DatoNoValidoException{
-        if (!tipo.equalsIgnoreCase("F") && !tipo.equalsIgnoreCase("J")) {
+        if (!tipo.equalsIgnoreCase("F") && !tipo.equalsIgnoreCase("J")
+            && !tipo.equalsIgnoreCase("FISICA") && !tipo.equalsIgnoreCase("JURIDICA")) {
             throw new DatoNoValidoException(tipo + " no es un tipo valido");
         }
     }

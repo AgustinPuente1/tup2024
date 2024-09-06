@@ -16,7 +16,7 @@ public class Cliente extends Persona{
     //Contructor para uso común
     public Cliente(ClienteDto clienteDto){
         super(clienteDto.getNombre(), clienteDto.getApellido(), clienteDto.getDni(), clienteDto.getFechaNacimiento(), clienteDto.getMail(), clienteDto.getTelefono());
-        if (clienteDto.getTipo().equals("F")){
+        if (clienteDto.getTipo().equalsIgnoreCase("F") || clienteDto.getTipo().equalsIgnoreCase("FISICA")){
             this.tipo = TipoCliente.PERSONA_FISICA;
         }else{
             this.tipo = TipoCliente.PERSONA_JURIDICA;
@@ -33,7 +33,7 @@ public class Cliente extends Persona{
 
     public Cliente(String nombre, String apellido, long dni, LocalDate fechaNacimiento, String mail, String telefono, String tipo){
         super(nombre, apellido, dni, fechaNacimiento, mail, telefono);
-        if (tipo.equals("F")){
+        if (tipo.equalsIgnoreCase("F") || tipo.equalsIgnoreCase("FISICA")){
             this.tipo = TipoCliente.PERSONA_FISICA;
         }else{
             this.tipo = TipoCliente.PERSONA_JURIDICA;

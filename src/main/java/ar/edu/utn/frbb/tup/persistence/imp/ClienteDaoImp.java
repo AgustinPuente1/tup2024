@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 
 import ar.edu.utn.frbb.tup.model.Cliente;
+import ar.edu.utn.frbb.tup.model.CuentaBancaria;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteAlreadyExistsException;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 import ar.edu.utn.frbb.tup.persistence.ClienteDao;
@@ -100,5 +101,18 @@ public class ClienteDaoImp implements ClienteDao{
         }
         clientes.removeIf(cliente -> cliente.getDni() == dni);
         saveClientes(clientes);
+    }
+
+    @Override
+    public Cliente getClienteByCuentaId(long id) throws ClienteNoExisteException {
+        List<Cliente> clientes = findClientes();
+        for (Cliente cliente : clientes) {
+            for (CuentaBancaria cuenta : cliente.getCuentas()) {
+                if (cuenta.getIdCuenta() == id) {
+                    return cliente;
+                }
+            }
+        }
+        throw new ClienteNoExisteException("No se encontro el cliente con cuenta con id: " + id);
     }
 }

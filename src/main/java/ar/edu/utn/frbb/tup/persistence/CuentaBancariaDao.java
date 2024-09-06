@@ -27,4 +27,8 @@ public interface CuentaBancariaDao {
     void deleteCuentaBancaria(Cliente cliente, long id) throws CuentaNoExisteException, ClienteNoExisteException;
 
     void deleteCuentasPorTitular(long dni);
+
+    void addTransferBetweenBanks(Transferencias transferencia);
+    
+    void addTransferInBank(Transferencias transferencia);
 }

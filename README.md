@@ -5,6 +5,7 @@
 -metodos service en español
 -metodos dao en ingles
 -se puede cambiar los dni de los clientes
+-NO SE PUEDEN BORRAR LOS MOVIMIENTOS POR SEGURIDAD
 
 
 COMPLETE:
@@ -28,19 +29,21 @@ COMPLETE:
 -DELETE NO BORRA EN CLIENTEJSON
 -ARREGLAR DEPOSITO Y RETIRO
 -hacer que las monedas coincidan en depositos y retiros
+-Hacer que en requestBody pueda ser USD o dolares o minusculas y mayus
+-HACER QUE CUANDO DELETEO UN CLIENTE TAMBIEN BORRE CUENTAS
 
 
 In progress:
--Transferencias
+-Transferencias controller, service y dao
+-Validar que no te mandes plata a tu propia cuenta (SERVICE)
+-Test transferencias
 
 To do List:
+-Hacer que los exception de service sean validator
+-ACTUALIZAR CLIENTE BORRA CUENTAS, ClienteServiceImp Line 69
 -test controllers
 -Todo Transacciones
--ID de TRANSACCIONES Y TRANSFERENCIAS
--Cliente borrar cuentas controller
--HACER QUE CUANDO DELETEO UN CLIENTE TAMBIEN BORRE CUENTAS
--Hacer que transferencias y transacciones se agreguen a banco
--Hacer test unitarios
+-COMENTAR Y DOCUMENTAR EL PROYECTO
 
 
 GET/POST/PUT/DELETE
@@ -49,7 +52,7 @@ Clientes
 GET /api/cliente   Obtener todos los clientes        !
 GET /api/cliente/{id}  Obtener cliente individual    !
 POST /api/cliente   Crear cliente                    !
-PUT /api/cliente/{id}  Modificar cliente             !
+PUT /api/cliente/{id}  Modificar cliente             
 DELETE /api/cliente/{id}   Borrar cliente            !
 
 Cuentas 
@@ -63,10 +66,10 @@ DELETE /api/cuenta/{cuentaId}     Borra cuenta                   !
 
 Transfer
 GET /api/transfer   Obtener todos las transfers
-GET /api/cuenta/{cuentaId}/transfer   Obtener transfers
+GET /api/cuenta/{cuentaId}/transfers   Obtener transfers
 POST /api/transfer  Hacer transfers
 
 Transacciones
 GET /api/transaccion  Obtener todos las transacciones
-GET /api/cuenta/{cuentaId}/transaccion   Obtener transacciones
+GET /api/cuenta/{cuentaId}/transacciones   Obtener transacciones
 POST /api/transaccion  Hacer transfers

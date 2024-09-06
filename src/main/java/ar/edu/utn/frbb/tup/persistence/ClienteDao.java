@@ -18,4 +18,5 @@ public interface ClienteDao {
 
     void deleteCliente(long dni) throws ClienteNoExisteException, CuentaNoExisteException;
 
+    Cliente getClienteByCuentaId(long id) throws ClienteNoExisteException;
 }

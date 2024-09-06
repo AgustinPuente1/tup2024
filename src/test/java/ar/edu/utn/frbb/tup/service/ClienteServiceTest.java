@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import ar.edu.utn.frbb.tup.persistence.ClienteDao;
+import ar.edu.utn.frbb.tup.persistence.imp.CuentaBancariaDaoImp;
 import ar.edu.utn.frbb.tup.model.Cliente;
 import ar.edu.utn.frbb.tup.controllers.dto.ClienteDto;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteAlreadyExistsException;
@@ -28,6 +29,9 @@ public class ClienteServiceTest {
 
     @Mock
     private ClienteDao clienteDao;
+
+    @Mock 
+    private CuentaBancariaDaoImp cuentaBancariaDao;
 
     @InjectMocks
     private ClienteServiceImp clienteService;
@@ -137,6 +141,7 @@ public class ClienteServiceTest {
         Cliente expectedCliente = new Cliente(clienteDto);
         when(clienteDao.getCliente(12345678L)).thenReturn(expectedCliente);
         doNothing().when(clienteDao).deleteCliente(12345678L);
+        doNothing().when(cuentaBancariaDao).deleteCuentasPorTitular(12345678L);
         clienteService.borrarCliente(12345678L);
 
         verify(clienteDao, times(1)).deleteCliente(12345678L);
