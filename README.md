@@ -6,6 +6,7 @@
 -metodos dao en ingles
 -se puede cambiar los dni de los clientes
 -NO SE PUEDEN BORRAR LOS MOVIMIENTOS POR SEGURIDAD
+-Ultimos test de TransfersService, pueden fallar, ya que uno de los when puede no usarse
 
 
 COMPLETE:

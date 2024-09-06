@@ -26,6 +26,7 @@ public class Transferencias {
         this.comision = 0;
     }
 
+    public Transferencias() {}
 
     public long getCuentaOrigen() {
         return cuentaOrigen;

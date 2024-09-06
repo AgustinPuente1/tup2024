@@ -130,4 +130,9 @@ public class TransferenciasDaoImp implements TransferenciasDao {
         tranfers.add(transferencia);
         saveTransfers(tranfers);
     }
+
+    //metodo solo para testear
+    public void deleteTransfers(){
+        saveTransfers(new ArrayList<>());
+    }
 }

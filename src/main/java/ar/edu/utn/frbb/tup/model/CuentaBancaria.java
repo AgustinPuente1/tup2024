@@ -59,6 +59,8 @@ public class CuentaBancaria {
         this.transacciones = new ArrayList<>();
     }
 
+    public CuentaBancaria() {}
+
     public long getTitular() {
         return titular;
     }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.utn.frbb.tup.controllers.dto.TransferenciasDto;
 import ar.edu.utn.frbb.tup.controllers.validator.TransferenciasValidator;
+import ar.edu.utn.frbb.tup.model.Recibo;
 import ar.edu.utn.frbb.tup.model.Transferencias;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
@@ -42,8 +43,8 @@ public class TransferenciasController {
     public ResponseEntity <?> crearTransferencia(@Valid @RequestBody TransferenciasDto transferenciasDto){
         try {
             transferenciasValidator.validate(transferenciasDto);
-            transferenciasService.crearTransferencia(transferenciasDto);
-            return ResponseEntity.ok("Transferencia creada correctamente");
+            Recibo recibo = transferenciasService.crearTransferencia(transferenciasDto);
+            return ResponseEntity.ok(recibo);
         } catch (DatoNoValidoException | CuentasIgualesException | MontoNoValidoException | SaldoNoValidoException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (CuentaNoExisteException | ClienteNoExisteException e) {

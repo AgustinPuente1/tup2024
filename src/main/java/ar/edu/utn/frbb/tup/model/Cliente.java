@@ -29,6 +29,7 @@ public class Cliente extends Persona{
     //Contructores para testeos
     public Cliente(){
         super();
+        this.cuentas = new HashSet<>();
     }
 
     public Cliente(String nombre, String apellido, long dni, LocalDate fechaNacimiento, String mail, String telefono, String tipo){
