@@ -233,7 +233,7 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
 
         for (CuentaBancaria c : cuentas) {
             if (c.getIdCuenta() == transferencia.getCuentaOrigen()) {
-                c.setSaldo(c.getSaldo() - transferencia.getMonto());
+                c.setSaldo(c.getSaldo() - transferencia.getMonto() - transferencia.getComision());
                 c.addTransferencia(transferencia);
                 break;
             }
