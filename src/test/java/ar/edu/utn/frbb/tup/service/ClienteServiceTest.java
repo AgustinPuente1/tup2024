@@ -119,6 +119,7 @@ public class ClienteServiceTest {
 
         Cliente expectedCliente = new Cliente(clienteDto);
         when(clienteDao.updateCliente(eq(12345678L), any(Cliente.class))).thenReturn(expectedCliente);
+        when(clienteDao.getCliente(12345678L)).thenReturn(expectedCliente);
 
         Cliente actualCliente = clienteService.actualizarCliente(12345678L, clienteDto);
 

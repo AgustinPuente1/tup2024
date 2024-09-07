@@ -75,6 +75,8 @@ public class Cliente extends Persona{
             }
         }
     }
-
+    public void setCuentas(Set<CuentaBancaria> cuentas) {
+        this.cuentas = cuentas;
+    }
     
 }

@@ -5,7 +5,6 @@
 -metodos service en español
 -metodos dao en ingles
 -se puede cambiar los dni de los clientes
--NO SE PUEDEN BORRAR LOS MOVIMIENTOS POR SEGURIDAD
 -Ultimos test de TransfersService, pueden fallar, ya que uno de los when puede no usarse
 
 
@@ -36,14 +35,14 @@ COMPLETE:
 -Validar que no te mandes plata a tu propia cuenta (SERVICE)
 -Test transferencias
 -TRANSFER EN BANCO NO MODIFICA AL QUE PAGA
+-ACTUALIZAR CLIENTE BORRA CUENTAS
 
 In progress:
--ACTUALIZAR CLIENTE BORRA CUENTAS, ClienteServiceImp Line 69
+-Transacciones controller, service y dao
 
 To do List:
 -Hacer que los exception de service sean validator
 -test controllers
--Todo Transacciones
 -COMENTAR Y DOCUMENTAR EL PROYECTO
 
 
@@ -69,6 +68,7 @@ Transfer
 GET /api/transfer   Obtener todos las transfers
 GET /api/cuenta/{cuentaId}/transfers   Obtener transfers
 POST /api/transfer  Hacer transfers
+DELETE /api/transfer borra todas las transfers
 
 Transacciones
 GET /api/transaccion  Obtener todos las transacciones

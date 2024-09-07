@@ -1,6 +1,7 @@
 package ar.edu.utn.frbb.tup.service.imp;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import java.time.Period;
 
 import ar.edu.utn.frbb.tup.controllers.dto.ClienteDto;
 import ar.edu.utn.frbb.tup.model.Cliente;
+import ar.edu.utn.frbb.tup.model.CuentaBancaria;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteAlreadyExistsException;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
@@ -66,13 +68,13 @@ public class ClienteServiceImp implements ClienteService {
             throw new EdadNoValidaException("No se pueden registrar personas de menos de 18 años");
         }
 
-        //ACA BORRA LAS CUENTAS
         Cliente cliente = new Cliente(clienteDto);
-        try {
-            return clienteDao.updateCliente(dni, cliente);
-        } catch (ClienteNoExisteException e) {
-            throw e;
-        }
+        Cliente clienteAModificar = clienteDao.getCliente(dni);
+        Set<CuentaBancaria> cuentas = clienteAModificar.getCuentas();
+        cliente.setCuentas(cuentas);
+        cliente.setDni(clienteAModificar.getDni());
+
+        return clienteDao.updateCliente(dni, cliente);
     }
 
     @Override

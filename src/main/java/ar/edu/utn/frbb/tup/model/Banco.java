@@ -15,7 +15,7 @@ public class Banco {
     private static final float LIMITE_COMISION_ARS = 1000000;
     private static final float LIMITE_COMISION_USD = 5000;
 
-    //Mensajes de recibo
+    //Mensajes de recibo transferencias
     private static final String EXITO_ENTRE_BANCOS = ("Transferencia entre bancos diferentes exitosa");
     private static final String EXITO_EN_BANCO = ("Transferencia entre cuentas del mismo banco exitosa");
     private static final String MENSAJE_ERROR = ("Error del sisteama al realizar la transferencia, intente de nuevo");
