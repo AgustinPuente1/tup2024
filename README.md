@@ -12,6 +12,7 @@
 -Transacciones: serían cobros o pagos que tu cuenta hace, por ejemplo a un local o un kiosko
 -Use json para almacenar los datos, los archivos se ubican en resources
 -Son 4 json: cliente, cuentaBancarias, transacciones y tranferencias
+-Los json vienen con datos dentro para demostración
 -Cada vez que haces algo en cuentaBancaria, modifica cliente
 -Cada movimiento, transaccion o transferencia, modifica cuentaBancaria y clientes, además de sus propios json
 -Todas las exceptions son checked
