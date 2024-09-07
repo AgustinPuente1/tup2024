@@ -31,4 +31,6 @@ public interface CuentaBancariaDao {
     void addTransferBetweenBanks(Transferencias transferencia);
     
     void addTransferInBank(Transferencias transferencia);
+
+    void addTransaccion(Transacciones transaccion);
 }

@@ -1,10 +1,16 @@
 package ar.edu.utn.frbb.tup.controllers.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class TransaccionesDto {
+    @NotNull(message = "La cuenta no puede ser nula")
     private long idCuenta;
-    private String tipo; //DEBITO CREDITO
+    @NotBlank(message = "El tipo no puede ser nulo")
+    private String tipo; 
+    @NotBlank(message = "La descripción no puede ser nula")
     private String descripcion;
+    @NotNull(message = "El monto no puede ser nulo")
     private float monto;
 
 

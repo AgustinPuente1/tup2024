@@ -1,12 +1,9 @@
 # tup2024final
--CuentaBancaria validaciones: Saldo > 0.
 
 #notas
 -metodos service en español
 -metodos dao en ingles
--se puede cambiar los dni de los clientes
--Ultimos test de TransfersService, pueden fallar, ya que uno de los when puede no usarse
-
+-Transacciones solo se pueden usar en pesos
 
 COMPLETE:
 -ClienteDto y PersonaDto
@@ -36,11 +33,15 @@ COMPLETE:
 -Test transferencias
 -TRANSFER EN BANCO NO MODIFICA AL QUE PAGA
 -ACTUALIZAR CLIENTE BORRA CUENTAS
+-Transacciones controller, service y dao
+-Transacciones solo en pesos
+-Testear Transacciones
 
 In progress:
--Transacciones controller, service y dao
+
 
 To do List:
+-Poner private a los validate no usables de validators
 -Hacer que los exception de service sean validator
 -test controllers
 -COMENTAR Y DOCUMENTAR EL PROYECTO
@@ -52,7 +53,7 @@ Clientes
 GET /api/cliente   Obtener todos los clientes        !
 GET /api/cliente/{id}  Obtener cliente individual    !
 POST /api/cliente   Crear cliente                    !
-PUT /api/cliente/{id}  Modificar cliente             
+PUT /api/cliente/{id}  Modificar cliente             !
 DELETE /api/cliente/{id}   Borrar cliente            !
 
 Cuentas 
@@ -65,12 +66,13 @@ POST /api/cuenta/{cuentaId}/retiro   crea un retiro              !
 DELETE /api/cuenta/{cuentaId}     Borra cuenta                   !
 
 Transfer
-GET /api/transfer   Obtener todos las transfers
-GET /api/cuenta/{cuentaId}/transfers   Obtener transfers
-POST /api/transfer  Hacer transfers
-DELETE /api/transfer borra todas las transfers
+GET /api/transfer   Obtener todos las transfers                  !
+GET /api/cuenta/{cuentaId}/transfers   Obtener transfers         !
+POST /api/transfer  Hacer transfers                              !
+DELETE /api/transfer borra todas las transfers                   !
 
 Transacciones
 GET /api/transaccion  Obtener todos las transacciones
 GET /api/cuenta/{cuentaId}/transacciones   Obtener transacciones
 POST /api/transaccion  Hacer transfers
+DELETE /api/transaccion borra todas las transacciones    

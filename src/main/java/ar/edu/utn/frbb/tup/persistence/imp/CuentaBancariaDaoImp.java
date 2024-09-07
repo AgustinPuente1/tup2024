@@ -20,6 +20,7 @@ import java.time.LocalDate;
 
 import ar.edu.utn.frbb.tup.model.Cliente;
 import ar.edu.utn.frbb.tup.model.CuentaBancaria;
+import ar.edu.utn.frbb.tup.model.TipoTransaccion;
 import ar.edu.utn.frbb.tup.model.Transacciones;
 import ar.edu.utn.frbb.tup.model.Transferencias;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
@@ -208,6 +209,25 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
             } else if (c.getIdCuenta() == transferencia.getCuentaDestino()) {
                 c.setSaldo(c.getSaldo() + transferencia.getMonto());
                 c.addTransferencia(transferencia);
+            }
+        }
+
+        saveCuentas(cuentas);
+    }
+
+    @Override
+    public void addTransaccion(Transacciones transaccion) {
+        List<CuentaBancaria> cuentas = findCuentas();
+
+        for (CuentaBancaria c : cuentas) {
+            if (c.getIdCuenta() == transaccion.getIdCuenta()) {
+                if (transaccion.getTipo().equals(TipoTransaccion.CREDITO)){
+                    c.setSaldo(c.getSaldo() - transaccion.getMonto());
+                } else {
+                    c.setSaldo(c.getSaldo() + transaccion.getMonto());
+                }
+                c.addTransacciones(transaccion);
+                break;
             }
         }
 

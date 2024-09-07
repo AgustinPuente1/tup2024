@@ -7,7 +7,6 @@ import ar.edu.utn.frbb.tup.controllers.dto.TransaccionesDto;
 public class Transacciones {
     //SOLO EN PESOS
     private long idCuenta;
-    private long idTransaccion;
     private LocalDate fecha; 
     private TipoTransaccion tipo;  
     private String descripcion;
@@ -15,9 +14,9 @@ public class Transacciones {
 
     public Transacciones(TransaccionesDto transaccionesDto) {
         this.idCuenta = transaccionesDto.getIdCuenta();
-        this.idTransaccion = 0;
         this.fecha = LocalDate.now();
-        if (transaccionesDto.getTipo() == "D") {
+        if (transaccionesDto.getTipo().equalsIgnoreCase("D")
+                || transaccionesDto.getTipo().equalsIgnoreCase("DEBITO")) {
             this.tipo = TipoTransaccion.DEBITO;
         } else {
             this.tipo = TipoTransaccion.CREDITO;
@@ -26,21 +25,18 @@ public class Transacciones {
         this.monto = transaccionesDto.getMonto();
     }
 
+    //Constructor para test
+
+    public Transacciones(){
+        this.fecha = LocalDate.now();
+    }
+
     public long getIdCuenta() {
         return idCuenta;
     }
     public void setIdCuenta(long idCuenta) {
         this.idCuenta = idCuenta;
     }
-
-
-    public long getIdTransaccion() {
-        return idTransaccion;
-    }
-    public void setIdTransaccion(long idTransaccion) {
-        this.idTransaccion = idTransaccion;
-    }
-
 
     public LocalDate getFecha() {
         return fecha;

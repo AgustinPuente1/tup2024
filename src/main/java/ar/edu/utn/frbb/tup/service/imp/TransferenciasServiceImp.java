@@ -128,16 +128,16 @@ public class TransferenciasServiceImp implements TransferenciasService {
 
     public boolean exitoTransferencia(boolean entreBancos){
         Random random = new Random();
-        //TENES UN 10% DE CHANCE DE FALLAR si la transf es entre bancos
-        //TENES UN 5% DE CHANCE DE FALLAR si la transf es entre cuentas del mismo banco
+        //TENES UN 5% DE CHANCE DE FALLAR si la transf es entre bancos
+        //TENES UN 1% DE CHANCE DE FALLAR si la transf es entre cuentas del mismo banco
         if (entreBancos){
-            if (random.nextInt(100) < 10){
+            if (random.nextInt(100) < 5){
                 return false;
             } else {
                 return true;
             }
         } else {
-            if (random.nextInt(100) < 5){
+            if (random.nextInt(100) < 1){
                 return false;
             } else {
                 return true;
