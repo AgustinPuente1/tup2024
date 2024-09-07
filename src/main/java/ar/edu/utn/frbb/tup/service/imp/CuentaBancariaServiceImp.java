@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.utn.frbb.tup.controllers.dto.CuentaBancariaDto;
+import ar.edu.utn.frbb.tup.controllers.dto.DepositoRetiroDto;
 import ar.edu.utn.frbb.tup.model.Banco;
 import ar.edu.utn.frbb.tup.model.Cliente;
 import ar.edu.utn.frbb.tup.model.CuentaBancaria;
@@ -54,6 +55,16 @@ public class CuentaBancariaServiceImp implements CuentaBancariaService {
         return cuentaBancariaDao.getTransferenciasById(idCuenta);
     }
 
+    /**
+     * Crea una nueva cuenta bancaria para el cliente especificado.
+     * Si el saldo es negativo se lanza una excepcion de SaldoNoValidoException.
+     * Si la cuenta ya existe se lanza una excepcion de CuentaAlreadyExistsException.
+     * @param cuentaBancariaDto la cuenta a crear
+     * @return la cuenta creada
+     * @throws ClienteNoExisteException si el cliente no existe
+     * @throws SaldoNoValidoException si el saldo es negativo
+     * @throws CuentaAlreadyExistsException si la cuenta ya existe
+     */
     @Override
     public CuentaBancaria crearCuenta(CuentaBancariaDto cuentaBancariaDto) throws ClienteNoExisteException, CuentaAlreadyExistsException, SaldoNoValidoException{
         Cliente cliente = clienteDao.getCliente(cuentaBancariaDto.getTitular());
@@ -76,8 +87,23 @@ public class CuentaBancariaServiceImp implements CuentaBancariaService {
         return cuentaBancaria;
     }
 
+    /**
+     * Agrega un deposito a una cuenta existente.
+     * Si el monto es negativo se lanza una excepcion de SaldoNoValidoException.
+     * Si la cuenta no existe se lanza una excepcion de CuentaNoExisteException.
+     * Si la moneda no coincide se lanza una excepcion de MonedaNoCoincideException.
+     * @param id el id de la cuenta
+     * @param depositoRetiroDto el deposito a agregar
+     * @return la cuenta modificada
+     * @throws CuentaNoExisteException si la cuenta no existe
+     * @throws SaldoNoValidoException si el saldo es negativo
+     * @throws MonedaNoCoincideException si la moneda no coincide
+     */
     @Override
-    public CuentaBancaria agregarDeposito(long id, float monto, String moneda) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException {
+    public CuentaBancaria agregarDeposito(long id, DepositoRetiroDto depositoRetiroDto) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException {
+        float monto = depositoRetiroDto.getMonto();
+        String moneda = depositoRetiroDto.getMoneda();
+        
         if (monto < 0){
             throw new SaldoNoValidoException("El saldo no puede ser negativo");
         }
@@ -97,8 +123,23 @@ public class CuentaBancariaServiceImp implements CuentaBancariaService {
         throw new CuentaNoExisteException("La cuenta no existe");
     }
 
+    /**
+     * Agrega un retiro a una cuenta existente.
+     * Si el monto es negativo se lanza una excepcion de SaldoNoValidoException.
+     * Si la cuenta no existe se lanza una excepcion de CuentaNoExisteException.
+     * Si la moneda no coincide se lanza una excepcion de MonedaNoCoincideException.
+     * @param id el id de la cuenta
+     * @param depositoRetiroDto el retiro a agregar
+     * @return la cuenta modificada
+     * @throws CuentaNoExisteException si la cuenta no existe
+     * @throws SaldoNoValidoException si el saldo es negativo
+     * @throws MonedaNoCoincideException si la moneda no coincide
+     */
     @Override
-    public CuentaBancaria agregarRetiro(long id, float monto, String moneda) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException{
+    public CuentaBancaria agregarRetiro(long id, DepositoRetiroDto depositoRetiroDto) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException{
+        float monto = depositoRetiroDto.getMonto();
+        String moneda = depositoRetiroDto.getMoneda();
+        
         if (monto < 0){
             throw new SaldoNoValidoException("El saldo no puede ser negativo");
         }
@@ -122,6 +163,14 @@ public class CuentaBancariaServiceImp implements CuentaBancariaService {
         throw new CuentaNoExisteException("La cuenta no existe");
     }
 
+    /**
+     * Borra una cuenta bancaria.
+     * Si la cuenta no existe se lanza una excepcion de CuentaNoExisteException.
+     * Si el cliente no existe se lanza una excepcion de ClienteNoExisteException.
+     * @param id el id de la cuenta a borrar
+     * @throws CuentaNoExisteException si la cuenta no existe
+     * @throws ClienteNoExisteException si el cliente no existe
+     */
     @Override
     public void borrarCuenta(long id) throws CuentaNoExisteException, ClienteNoExisteException{
         CuentaBancaria cuenta = obtenerCuentaPorId(id);

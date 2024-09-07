@@ -12,13 +12,13 @@ public class TransaccionesValidator {
         validateTipo(transaccionesDto.getTipo());
     }
 
-    public void validateIDCuenta(long idCuenta) throws DatoNoValidoException {
+    private void validateIDCuenta(long idCuenta) throws DatoNoValidoException {
         if (idCuenta <= 0) {
             throw new DatoNoValidoException("El ID de la cuenta no puede ser negativo o 0");
         }
     }
 
-    public void validateTipo(String tipo) throws DatoNoValidoException {
+    private void validateTipo(String tipo) throws DatoNoValidoException {
         if (!tipo.equalsIgnoreCase("DEBITO") && !tipo.equalsIgnoreCase("CREDITO")
             && !tipo.equalsIgnoreCase("D") && !tipo.equalsIgnoreCase("C")) {
             throw new DatoNoValidoException(tipo + " no es un tipo valido (DEBITO o CREDITO)");

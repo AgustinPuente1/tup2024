@@ -43,6 +43,14 @@ public class ClienteServiceImp implements ClienteService {
         return clienteDao.getCliente(dni);
     }
 
+    /**
+     * Crea un nuevo cliente y lo agrega a la base de datos.
+     * 
+     * @param clienteDto datos del cliente a crear
+     * @return el cliente creado
+     * @throws ClienteAlreadyExistsException si el cliente ya existe
+     * @throws EdadNoValidaException         si la edad del cliente es menor a 18 años
+     */
     @Override
     public Cliente crearCliente(ClienteDto clienteDto) throws ClienteAlreadyExistsException, EdadNoValidaException {
         LocalDate fechaHoy = LocalDate.now();
@@ -59,6 +67,15 @@ public class ClienteServiceImp implements ClienteService {
         }
     }
 
+    /**
+     * Actualiza un cliente existente en la base de datos.
+     * 
+     * @param dni        dni del cliente a actualizar
+     * @param clienteDto datos del cliente a actualizar
+     * @return el cliente actualizado
+     * @throws ClienteNoExisteException si el cliente no existe
+     * @throws EdadNoValidaException    si la edad del cliente es menor a 18 años
+     */
     @Override
     public Cliente actualizarCliente(long dni,ClienteDto clienteDto) throws ClienteNoExisteException, EdadNoValidaException {
         LocalDate fechaHoy = LocalDate.now();
@@ -68,6 +85,7 @@ public class ClienteServiceImp implements ClienteService {
             throw new EdadNoValidaException("No se pueden registrar personas de menos de 18 años");
         }
 
+        //Crear un nuevo cliente y le mete las cuentas del cliente a modificar
         Cliente cliente = new Cliente(clienteDto);
         Cliente clienteAModificar = clienteDao.getCliente(dni);
         Set<CuentaBancaria> cuentas = clienteAModificar.getCuentas();
@@ -77,6 +95,13 @@ public class ClienteServiceImp implements ClienteService {
         return clienteDao.updateCliente(dni, cliente);
     }
 
+    /**
+     * Borra un cliente existente en la base de datos.
+     * 
+     * @param dni dni del cliente a borrar
+     * @throws ClienteNoExisteException si el cliente no existe
+     * @throws CuentaNoExisteException  si el cliente tiene al menos una cuenta
+     */
     @Override
     public void borrarCliente(long dni) throws ClienteNoExisteException, CuentaNoExisteException {
         cuentaBancariaDao.deleteCuentasPorTitular(dni);

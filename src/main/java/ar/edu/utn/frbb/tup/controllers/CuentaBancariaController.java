@@ -38,18 +38,6 @@ public class CuentaBancariaController {
     @Autowired
     private CuentaBancariaValidator cuentaBancariaValidator;
 
-    /*
-     Cuentas 
-        GET /api/cuenta    Obtener todas las cuentas
-        GET /api/cuenta/{titular}  Obtener cuentas de cliente
-        GET /api/cuenta/{cuentaId}/transfer   Obtener transfers
-        GET /api/cuenta/{cuentaId}/transacciones   Obtener transacciones
-        POST /api/cuenta  Crea cuenta de cliente
-        POST /api/cuenta/{cuentaId}/deposito  crea un deposito
-        POST /api/cuenta/{cuentaId}/retiro   crea un retiro
-        DELETE /api/cuenta/{cuentaId}     Borra cuenta
-     */
-
     @GetMapping
     public ResponseEntity <List<CuentaBancaria>> obtenerAllCuentas() {
         List<CuentaBancaria> cuentas = cuentaBancariaService.obtenerAllCuentas();
@@ -102,7 +90,7 @@ public class CuentaBancariaController {
     @PostMapping("/{cuentaId}/deposito")
     public ResponseEntity <?> crearDeposito(@PathVariable("cuentaId") long cuentaId, @Valid @RequestBody DepositoRetiroDto depositoRetiroDto) {
         try {
-            CuentaBancaria cuenta = cuentaBancariaService.agregarDeposito(cuentaId, depositoRetiroDto.getMonto(), depositoRetiroDto.getMoneda());
+            CuentaBancaria cuenta = cuentaBancariaService.agregarDeposito(cuentaId, depositoRetiroDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(cuenta);
         } catch (CuentaNoExisteException | ClienteNoExisteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -114,7 +102,7 @@ public class CuentaBancariaController {
     @PostMapping("/{cuentaId}/retiro")
     public ResponseEntity <?> crearRetiro(@PathVariable("cuentaId") long cuentaId, @Valid @RequestBody DepositoRetiroDto depositoRetiroDto) {
         try {
-            CuentaBancaria cuenta = cuentaBancariaService.agregarRetiro(cuentaId, depositoRetiroDto.getMonto(), depositoRetiroDto.getMoneda());
+            CuentaBancaria cuenta = cuentaBancariaService.agregarRetiro(cuentaId, depositoRetiroDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(cuenta);
         } catch (CuentaNoExisteException | ClienteNoExisteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

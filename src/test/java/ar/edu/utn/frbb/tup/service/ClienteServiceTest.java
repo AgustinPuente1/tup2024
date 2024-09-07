@@ -2,9 +2,11 @@ package ar.edu.utn.frbb.tup.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import ar.edu.utn.frbb.tup.persistence.ClienteDao;
 import ar.edu.utn.frbb.tup.persistence.imp.CuentaBancariaDaoImp;
@@ -25,6 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class ClienteServiceTest {
 
     @Mock
@@ -140,7 +143,7 @@ public class ClienteServiceTest {
         clienteDto.setTelefono("123456789");
 
         Cliente expectedCliente = new Cliente(clienteDto);
-        when(clienteDao.getCliente(12345678L)).thenReturn(expectedCliente);
+        lenient().when(clienteDao.getCliente(12345678L)).thenReturn(expectedCliente);
         doNothing().when(clienteDao).deleteCliente(12345678L);
         doNothing().when(cuentaBancariaDao).deleteCuentasPorTitular(12345678L);
         clienteService.borrarCliente(12345678L);

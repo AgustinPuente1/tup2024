@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
 
 import ar.edu.utn.frbb.tup.controllers.dto.CuentaBancariaDto;
+import ar.edu.utn.frbb.tup.controllers.dto.DepositoRetiroDto;
 import ar.edu.utn.frbb.tup.model.Banco;
 import ar.edu.utn.frbb.tup.model.Cliente;
 import ar.edu.utn.frbb.tup.model.CuentaBancaria;
@@ -105,12 +106,18 @@ public class CuentaBancariaServiceTest {
         when(clienteDao.getCliente(anyLong())).thenReturn(cliente);
         when(cuentaBancariaDao.getCuentaBancariaById(anyLong())).thenReturn(cuenta);
         
-        assertThrows(CuentaNoExisteException.class, () -> cuentaBancariaService.agregarDeposito(0, 1000, "USD"));
+        DepositoRetiroDto depositoRetiroDto = new DepositoRetiroDto();
+        depositoRetiroDto.setMonto(1000);
+        depositoRetiroDto.setMoneda("USD");
+        assertThrows(CuentaNoExisteException.class, () -> cuentaBancariaService.agregarDeposito(0, depositoRetiroDto));
     }
 
     @Test
     public void testAgregarDepositoSaldoNegativo() throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException{
-        assertThrows(SaldoNoValidoException.class, () -> cuentaBancariaService.agregarDeposito(0, -1000, "USD"));
+        DepositoRetiroDto depositoRetiroDto = new DepositoRetiroDto();
+        depositoRetiroDto.setMonto(-1000);
+        depositoRetiroDto.setMoneda("USD");
+        assertThrows(SaldoNoValidoException.class, () -> cuentaBancariaService.agregarDeposito(0, depositoRetiroDto));
     }
 
     @Test 
@@ -126,6 +133,9 @@ public class CuentaBancariaServiceTest {
         when(clienteDao.getCliente(12345678)).thenReturn(new Cliente("Juan", "Perez", 12345678, LocalDate.of(1990, 1, 1), "juan@mail.com", "+5491112345678", "F"));
         when(banco.getLimiteSobregiro()).thenReturn(100000f);
 
-        assertThrows(SaldoNoValidoException.class, () -> cuentaBancariaService.agregarRetiro(0, 30000000, "ARS"));
+        DepositoRetiroDto depositoRetiroDto = new DepositoRetiroDto();
+        depositoRetiroDto.setMonto(30000000);
+        depositoRetiroDto.setMoneda("ARS");
+        assertThrows(SaldoNoValidoException.class, () -> cuentaBancariaService.agregarRetiro(0, depositoRetiroDto));
     }
 }

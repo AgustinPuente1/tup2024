@@ -43,7 +43,7 @@ public class TransaccionesController {
         try {
             transaccionesValidator.validate(transaccionesDto);
             Transacciones transaccion = transaccionesService.crearTransaccion(transaccionesDto);
-            return ResponseEntity.ok(transaccion);
+            return ResponseEntity.status(HttpStatus.CREATED).body(transaccion);
         } catch (MontoNoValidoException | MonedaNoCoincideException | DatoNoValidoException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (ClienteNoExisteException | CuentaNoExisteException e){

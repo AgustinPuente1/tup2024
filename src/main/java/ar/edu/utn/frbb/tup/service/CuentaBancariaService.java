@@ -3,6 +3,7 @@ package ar.edu.utn.frbb.tup.service;
 import java.util.List;
 
 import ar.edu.utn.frbb.tup.controllers.dto.CuentaBancariaDto;
+import ar.edu.utn.frbb.tup.controllers.dto.DepositoRetiroDto;
 import ar.edu.utn.frbb.tup.model.CuentaBancaria;
 import ar.edu.utn.frbb.tup.model.Transacciones;
 import ar.edu.utn.frbb.tup.model.Transferencias;
@@ -23,9 +24,9 @@ public interface CuentaBancariaService {
 
     CuentaBancaria crearCuenta(CuentaBancariaDto cuentaBancariaDto) throws ClienteNoExisteException, CuentaAlreadyExistsException, SaldoNoValidoException;
 
-    CuentaBancaria agregarDeposito(long id, float monto, String moneda) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException;
+    CuentaBancaria agregarDeposito(long id, DepositoRetiroDto depositoRetiroDto) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException;
 
-    CuentaBancaria agregarRetiro(long id, float monto, String moneda) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException;
+    CuentaBancaria agregarRetiro(long id, DepositoRetiroDto depositoRetiroDto) throws CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException;
 
     void borrarCuenta(long id) throws CuentaNoExisteException, ClienteNoExisteException;
 }

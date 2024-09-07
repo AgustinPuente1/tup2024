@@ -12,7 +12,7 @@ public class TransferenciasValidator {
         validateMoneda(transferenciasDto.getMoneda());
     }
 
-    public void validateCuentas(long titular1, long titular2) throws DatoNoValidoException{
+    private void validateCuentas(long titular1, long titular2) throws DatoNoValidoException{
         if (titular1 < 1){
             throw new DatoNoValidoException("El ID de la cuenta origen no puede ser negativo o 0");
         } else if (titular2 < 1){
@@ -20,7 +20,7 @@ public class TransferenciasValidator {
         }
     }
 
-    public void validateMoneda(String moneda) throws DatoNoValidoException{
+    private void validateMoneda(String moneda) throws DatoNoValidoException{
         if (!moneda.equalsIgnoreCase("USD") && !moneda.equalsIgnoreCase("ARS") 
                 && !moneda.equalsIgnoreCase("DOLARES") && !moneda.equalsIgnoreCase("PESOS")){
             throw new DatoNoValidoException("La moneda debe ser USD o ARS");

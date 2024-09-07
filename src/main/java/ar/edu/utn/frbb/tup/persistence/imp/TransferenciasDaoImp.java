@@ -72,6 +72,14 @@ public class TransferenciasDaoImp implements TransferenciasDao {
         return findTransfers();
     }
 
+    /**
+     * Realiza una transferencia entre dos cuentas que pertenecen a
+     * diferentes bancos. La transferencia se registra en la cuenta de
+     * origen, en clientes y en el listado de transferencias.
+     * 
+     * @param transferencia La transferencia a realizar.
+     * @throws ClienteNoExisteException Si el cliente no existe.
+     */
     @Override
     public void transferBetweenBanks(Transferencias transferencia) throws ClienteNoExisteException {
         List<Transferencias> tranfers = findTransfers();
@@ -97,31 +105,60 @@ public class TransferenciasDaoImp implements TransferenciasDao {
         saveTransfers(tranfers);
     }
 
+    /**
+     * Realiza una transferencia entre dos cuentas que pertenecen al
+     * mismo banco. La transferencia se registra en la cuenta de
+     * origen, la cuenta de destino, en clientes y en el listado de transferencias.
+     * 
+     * @param transferencia La transferencia a realizar.
+     * @throws ClienteNoExisteException Si el cliente no existe.
+     */
     @Override
     public void transferInBank(Transferencias transferencia) throws ClienteNoExisteException {
         List<Transferencias> tranfers = findTransfers();
-
+        
         Cliente clienteOrigen = clienteDao.getClienteByCuentaId(transferencia.getCuentaOrigen());
         Cliente clienteDestino = clienteDao.getClienteByCuentaId(transferencia.getCuentaDestino());
 
-        //Agrega a clientes.json
-        for (CuentaBancaria c : clienteOrigen.getCuentas()) {
-            if (c.getIdCuenta() == transferencia.getCuentaOrigen()) {
-                c.setSaldo(c.getSaldo() - transferencia.getMonto() - transferencia.getComision());
-                c.addTransferencia(transferencia);
-                break;
+        if (clienteOrigen.getDni() == clienteDestino.getDni()) {
+            Cliente cliente = clienteOrigen;
+
+            //Agrega a clientes.json
+            for (CuentaBancaria c : cliente.getCuentas()) {
+                if (c.getIdCuenta() == transferencia.getCuentaOrigen()) {
+                    c.setSaldo(c.getSaldo() - transferencia.getMonto() - transferencia.getComision());
+                    c.addTransferencia(transferencia);
+                }
+                if (c.getIdCuenta() == transferencia.getCuentaDestino()) {
+                    c.setSaldo(c.getSaldo() + transferencia.getMonto());
+                    c.addTransferencia(transferencia);
+                }
             }
-        }
-        for (CuentaBancaria c : clienteDestino.getCuentas()) {
-            if (c.getIdCuenta() == transferencia.getCuentaDestino()) {
-                c.setSaldo(c.getSaldo() + transferencia.getMonto());
-                c.addTransferencia(transferencia);
-                break;
+
+            clienteDao.updateCliente(cliente.getDni(), cliente);
+
+        } else {
+            //Agrega a clientes.json
+            for (CuentaBancaria c : clienteOrigen.getCuentas()) {
+                if (c.getIdCuenta() == transferencia.getCuentaOrigen()) {
+                    c.setSaldo(c.getSaldo() - transferencia.getMonto() - transferencia.getComision());
+                    c.addTransferencia(transferencia);
+                    break;
+                }
             }
+            for (CuentaBancaria c : clienteDestino.getCuentas()) {
+                if (c.getIdCuenta() == transferencia.getCuentaDestino()) {
+                    c.setSaldo(c.getSaldo() + transferencia.getMonto());
+                    c.addTransferencia(transferencia);
+                    break;
+                }
+            }
+
+            clienteDao.updateCliente(clienteOrigen.getDni(), clienteOrigen);
+            clienteDao.updateCliente(clienteDestino.getDni(), clienteDestino);
         }
 
-        clienteDao.updateCliente(clienteOrigen.getDni(), clienteOrigen);
-        clienteDao.updateCliente(clienteDestino.getDni(), clienteDestino);
+    
 
         //Agrega a cuentasBancarias.json
         cuentaBancariaDao.addTransferInBank(transferencia);

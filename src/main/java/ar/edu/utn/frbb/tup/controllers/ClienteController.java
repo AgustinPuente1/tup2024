@@ -37,13 +37,6 @@ public class ClienteController {
     @Autowired
     private ClienteValidator clienteValidator;
 
-    /*
-    GET /api/cliente   Obtener todos los clientes        !
-    GET /api/cliente/{id}  Obtener cliente individual    !
-    POST /api/cliente   Crear cliente                    !
-    PUT /api/cliente/{id}  Modificar cliente             !
-    DELETE /api/cliente/{id}   Borrar cliente            !
-    */
 
     @GetMapping
     public ResponseEntity <List<Cliente>> obtenerAllClientes() {
@@ -68,11 +61,9 @@ public class ClienteController {
             Cliente cliente = clienteService.crearCliente(clienteDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
         
-        } catch (DatoNoValidoException e) {
+        } catch (DatoNoValidoException | ClienteAlreadyExistsException | EdadNoValidaException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (ClienteAlreadyExistsException | EdadNoValidaException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        } 
     }
 
     @PutMapping("/{dni}")
@@ -81,10 +72,10 @@ public class ClienteController {
             clienteValidator.validate(clienteDto); // Validar el ClienteDto
             Cliente cliente = clienteService.actualizarCliente(dni,clienteDto);
             return ResponseEntity.ok(cliente);
-        } catch (DatoNoValidoException e) {
+        } catch (DatoNoValidoException | EdadNoValidaException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (ClienteNoExisteException | EdadNoValidaException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (ClienteNoExisteException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 

@@ -80,6 +80,14 @@ public class ClienteDaoImp implements ClienteDao{
     }
 
 
+    /**
+     * Actualiza un cliente existente en la base de datos.
+     * 
+     * @param dni        dni del cliente a actualizar
+     * @param cliente    datos del cliente a actualizar
+     * @return el cliente actualizado
+     * @throws ClienteNoExisteException si el cliente no existe
+     */
     @Override
     public Cliente updateCliente(long dni, Cliente cliente) throws ClienteNoExisteException {
         List<Cliente> clientes = findClientes();
@@ -93,6 +101,12 @@ public class ClienteDaoImp implements ClienteDao{
         throw new ClienteNoExisteException("No se encontro el cliente con dni: " + cliente.getDni());
     }
 
+    /**
+     * Borra un cliente existente en la base de datos.
+     * 
+     * @param dni dni del cliente a borrar
+     * @throws ClienteNoExisteException si el cliente no existe
+     */
     @Override
     public void deleteCliente(long dni) throws ClienteNoExisteException {
         List<Cliente> clientes = findClientes();
@@ -103,6 +117,13 @@ public class ClienteDaoImp implements ClienteDao{
         saveClientes(clientes);
     }
 
+    /**
+     * Busca el cliente que tiene la cuenta con el id especificado.
+     * 
+     * @param id el id de la cuenta a buscar
+     * @return el cliente que tiene la cuenta
+     * @throws ClienteNoExisteException si no se encontro el cliente
+     */
     @Override
     public Cliente getClienteByCuentaId(long id) throws ClienteNoExisteException {
         List<Cliente> clientes = findClientes();

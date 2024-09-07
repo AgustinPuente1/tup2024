@@ -38,6 +38,16 @@ public class TransaccionesServiceImp implements TransaccionesService {
         return transaccionesDao.getAllTransacciones();
     }
 
+    /**
+     * Crea una nueva transacci n en la base de datos.
+     * 
+     * @param transaccionesDto datos de la transacci n a crear
+     * @return la transacci n creada
+     * @throws MontoNoValidoException              si el monto es negativo o 0
+     * @throws CuentaNoExisteException             si la cuenta no existe
+     * @throws MonedaNoCoincideException           si la moneda de la cuenta no es en pesos
+     * @throws ClienteNoExisteException            si el cliente no existe
+     */
     @Override
     public Transacciones crearTransaccion(TransaccionesDto transaccionesDto) throws MontoNoValidoException, CuentaNoExisteException, MonedaNoCoincideException, ClienteNoExisteException{
         //Excepciones iniciales

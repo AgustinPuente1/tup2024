@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+// NO ME ANDABA EL JSON POR UN ERROR EN QUE NO ME TOMABA EL FORMATO LocalDate
 public class LocalDateAdapter extends TypeAdapter<LocalDate> {
     private DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 

@@ -71,6 +71,13 @@ public class TransaccionesDaoImp implements TransaccionesDao {
         return findTransacciones();
     }
 
+    /**
+     * Crea una nueva transacci n en la base de datos.
+     * 
+     * @param transaccion datos de la transacci n a crear
+     * @return la transacci n creada
+     * @throws ClienteNoExisteException si el cliente no existe
+     */
     @Override
     public Transacciones createTransaccion(Transacciones transaccion) throws ClienteNoExisteException{
         List<Transacciones> transacciones = findTransacciones();

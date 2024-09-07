@@ -43,6 +43,18 @@ public class TransferenciasServiceImp implements TransferenciasService {
         return transferenciasDao.getAllTransfers();
     }
 
+    /**
+     * Crea una nueva transferencia entre dos cuentas.
+     * 
+     * @param transferenciasDto Contiene los datos de la transferencia a realizar.
+     * @return Un objeto Recibo que contiene el estado de la transferencia.
+     * @throws CuentasIgualesException         Si la cuenta de origen es igual a la cuenta de destino.
+     * @throws MontoNoValidoException         Si el monto no es válido (negativo o 0).
+     * @throws CuentaNoExisteException        Si la cuenta de origen o destino no existe.
+     * @throws SaldoNoValidoException         Si el saldo de la cuenta de origen es insuficiente.
+     * @throws ClienteNoExisteException       Si el cliente no existe.
+     * @throws MonedaNoCoincideException      Si la moneda no coincide entre las dos cuentas.
+     */
     @Override
     public Recibo crearTransferencia(TransferenciasDto transferenciasDto) throws CuentasIgualesException, MontoNoValidoException, CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException {
         //Excepciones iniciales 
@@ -87,6 +99,8 @@ public class TransferenciasServiceImp implements TransferenciasService {
                     || transferencia.getMoneda() != cuentaDestino.getMoneda()) {
                 throw new MonedaNoCoincideException("La moneda no coincide");
             }
+        } else if (cuentaOrigen.getMoneda() != transferencia.getMoneda()) {
+            throw new MonedaNoCoincideException("La moneda no coincide");
         }
 
         if (tranferEntreBancos) {

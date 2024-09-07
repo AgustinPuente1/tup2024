@@ -95,6 +95,14 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
         return cuenta.getTransferencias();
     }
 
+    /**
+     * Crea una nueva cuenta bancaria para el cliente especificado.
+     * Genera un id unico para la cuenta.
+     * Si el cliente no existe se lanza una excepcion de ClienteNoExisteException.
+     * @param cuentaBancaria la cuenta a crear
+     * @return la cuenta creada
+     * @throws ClienteNoExisteException si el cliente no existe
+     */
     @Override
     public CuentaBancaria createCuentaBancaria(CuentaBancaria cuentaBancaria) throws ClienteNoExisteException {
         List<CuentaBancaria> cuentas = findCuentas();
@@ -120,6 +128,16 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
         return cuentaBancaria;
     }
 
+    /**
+     * Agrega un deposito a una cuenta existente.
+     * Si la cuenta no existe se lanza una excepcion de CuentaNoExisteException.
+     * Si el cliente no existe se lanza una excepcion de ClienteNoExisteException.
+     * @param id el id de la cuenta
+     * @param monto el monto del deposito
+     * @return la cuenta modificada
+     * @throws CuentaNoExisteException si la cuenta no existe
+     * @throws ClienteNoExisteException si el cliente no existe
+     */
     @Override
     public CuentaBancaria addDeposito(Cliente cliente, long id, float monto) throws CuentaNoExisteException, ClienteNoExisteException {
         List<CuentaBancaria> cuentas = findCuentas();
@@ -141,6 +159,16 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
         return cuenta;
     }
  
+    /**
+     * Agrega un retiro a una cuenta existente.
+     * Si la cuenta no existe se lanza una excepcion de CuentaNoExisteException.
+     * Si el cliente no existe se lanza una excepcion de ClienteNoExisteException.
+     * @param id el id de la cuenta
+     * @param monto el monto del retiro
+     * @return la cuenta modificada
+     * @throws CuentaNoExisteException si la cuenta no existe
+     * @throws ClienteNoExisteException si el cliente no existe
+     */
     @Override
     public CuentaBancaria addRetiro(Cliente cliente, long id, float monto) throws CuentaNoExisteException, ClienteNoExisteException {
         List<CuentaBancaria> cuentas = findCuentas();
@@ -162,6 +190,14 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
         return cuenta;
     }
 
+    /**
+     * Borra una cuenta bancaria.
+     * Si la cuenta no existe se lanza una excepcion de CuentaNoExisteException.
+     * Si el cliente no existe se lanza una excepcion de ClienteNoExisteException.
+     * @param id el id de la cuenta a borrar
+     * @throws CuentaNoExisteException si la cuenta no existe
+     * @throws ClienteNoExisteException si el cliente no existe
+     */
     @Override
     public void deleteCuentaBancaria(Cliente cliente, long id) throws CuentaNoExisteException, ClienteNoExisteException {
         List<CuentaBancaria> cuentas = findCuentas();
@@ -174,6 +210,10 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
         saveCuentas(cuentas);
     }
 
+    /**
+     * Borra todas las cuentas bancarias de un cliente.
+     * @param dni el DNI del cliente
+     */
     @Override
     public void deleteCuentasPorTitular(long dni){
         List<CuentaBancaria> cuentas = findCuentas();
@@ -183,6 +223,10 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
         saveCuentas(cuentas);
     }
 
+    /**
+     * Agrega una transferencia entre cuentas bancarias.
+     * @param transferencia la transferencia a agregar
+     */
     @Override 
     public void addTransferBetweenBanks(Transferencias transferencia) {
         List<CuentaBancaria> cuentas = findCuentas();
@@ -198,6 +242,10 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
         saveCuentas(cuentas);
     }
 
+    /**
+     * Agrega una transferencia dentro de la misma entidad bancaria.
+     * @param transferencia la transferencia a agregar
+     */
     @Override
     public void addTransferInBank(Transferencias transferencia) {
         List<CuentaBancaria> cuentas = findCuentas();
@@ -215,6 +263,11 @@ public class CuentaBancariaDaoImp implements CuentaBancariaDao {
         saveCuentas(cuentas);
     }
 
+    /**
+     * Agrega una transacci n a una cuenta bancaria.
+     * Actualiza el saldo de la cuenta seg n el tipo de transacci n.
+     * @param transaccion la transacci n a agregar
+     */
     @Override
     public void addTransaccion(Transacciones transaccion) {
         List<CuentaBancaria> cuentas = findCuentas();

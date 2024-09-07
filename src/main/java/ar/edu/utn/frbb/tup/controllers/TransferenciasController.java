@@ -46,7 +46,7 @@ public class TransferenciasController {
         try {
             transferenciasValidator.validate(transferenciasDto);
             Recibo recibo = transferenciasService.crearTransferencia(transferenciasDto);
-            return ResponseEntity.ok(recibo);
+            return ResponseEntity.status(HttpStatus.CREATED).body(recibo);
         } catch (DatoNoValidoException | CuentasIgualesException | MontoNoValidoException | SaldoNoValidoException | MonedaNoCoincideException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (CuentaNoExisteException | ClienteNoExisteException e) {

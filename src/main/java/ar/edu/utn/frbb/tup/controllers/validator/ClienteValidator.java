@@ -18,7 +18,7 @@ public class ClienteValidator {
         validateTipo(clienteDto.getTipo());
     }
 
-    public void validateNombreApellido(String nombre, String apellido) throws DatoNoValidoException {
+    private void validateNombreApellido(String nombre, String apellido) throws DatoNoValidoException {
         if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
             throw new DatoNoValidoException(nombre + " no es un nombre valido");
         } else if (!apellido.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
@@ -26,7 +26,7 @@ public class ClienteValidator {
         }
     }
 
-    public void validateDni(long dni) throws DatoNoValidoException {
+    private void validateDni(long dni) throws DatoNoValidoException {
         if (dni < 1) {
             throw new DatoNoValidoException("DNI no puede ser negativo o 0");
         } else if (String.valueOf(dni).length() > 8) {
@@ -34,25 +34,25 @@ public class ClienteValidator {
         }
     }
 
-    public void validateFechaNacimiento(LocalDate fechaNacimiento) throws DatoNoValidoException {
+    private void validateFechaNacimiento(LocalDate fechaNacimiento) throws DatoNoValidoException {
         if (fechaNacimiento.isAfter(LocalDate.now())) {
             throw new DatoNoValidoException("La fecha de nacimiento no puede ser posterior a la fecha actual");
         }
     }
 
-    public void validateMail(String mail) throws DatoNoValidoException{
+    private void validateMail(String mail) throws DatoNoValidoException{
         if (!mail.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
             throw new DatoNoValidoException(mail + " no es un mail valido");
         }
     }
 
-    public void validateTelefono(String telefono) throws DatoNoValidoException{
+    private void validateTelefono(String telefono) throws DatoNoValidoException{
         if (!telefono.matches("^\\+?[0-9]{9,15}$")) {
             throw new DatoNoValidoException(telefono + " no es un telefono valido");
         }
     }
 
-    public void validateTipo(String tipo) throws DatoNoValidoException{
+    private void validateTipo(String tipo) throws DatoNoValidoException{
         if (!tipo.equalsIgnoreCase("F") && !tipo.equalsIgnoreCase("J")
             && !tipo.equalsIgnoreCase("FISICA") && !tipo.equalsIgnoreCase("JURIDICA")) {
             throw new DatoNoValidoException(tipo + " no es un tipo valido");
