@@ -81,7 +81,7 @@ public class TransferenciasDaoImp implements TransferenciasDao {
         //Agrega a clientes.json
         for (CuentaBancaria c : cliente.getCuentas()) {
             if (c.getIdCuenta() == transferencia.getCuentaOrigen()) {
-                c.setSaldo(c.getSaldo() - transferencia.getMonto());
+                c.setSaldo(c.getSaldo() - transferencia.getMonto() - transferencia.getComision());
                 c.addTransferencia(transferencia);
                 break;
             }
@@ -107,7 +107,7 @@ public class TransferenciasDaoImp implements TransferenciasDao {
         //Agrega a clientes.json
         for (CuentaBancaria c : clienteOrigen.getCuentas()) {
             if (c.getIdCuenta() == transferencia.getCuentaOrigen()) {
-                c.setSaldo(c.getSaldo() - transferencia.getMonto());
+                c.setSaldo(c.getSaldo() - transferencia.getMonto() - transferencia.getComision());
                 c.addTransferencia(transferencia);
                 break;
             }

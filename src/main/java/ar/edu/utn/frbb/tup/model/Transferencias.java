@@ -26,7 +26,10 @@ public class Transferencias {
         this.comision = 0;
     }
 
-    public Transferencias() {}
+    public Transferencias() {
+        this.fechaHora = LocalDate.now();
+        this.comision = 0;
+    }
 
     public long getCuentaOrigen() {
         return cuentaOrigen;

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentasIgualesException;
 import ar.edu.utn.frbb.tup.model.exceptions.DatoNoValidoException;
+import ar.edu.utn.frbb.tup.model.exceptions.MonedaNoCoincideException;
 import ar.edu.utn.frbb.tup.model.exceptions.MontoNoValidoException;
 import ar.edu.utn.frbb.tup.model.exceptions.SaldoNoValidoException;
 import ar.edu.utn.frbb.tup.service.TransferenciasService;
@@ -45,10 +47,16 @@ public class TransferenciasController {
             transferenciasValidator.validate(transferenciasDto);
             Recibo recibo = transferenciasService.crearTransferencia(transferenciasDto);
             return ResponseEntity.ok(recibo);
-        } catch (DatoNoValidoException | CuentasIgualesException | MontoNoValidoException | SaldoNoValidoException e) {
+        } catch (DatoNoValidoException | CuentasIgualesException | MontoNoValidoException | SaldoNoValidoException | MonedaNoCoincideException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (CuentaNoExisteException | ClienteNoExisteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+    @DeleteMapping
+    public ResponseEntity <?> borrarAllTransferencias(){
+        transferenciasService.borrarAllTransferencias();
+        return ResponseEntity.ok("Se borraron todas las transferencias");
     }
 }

@@ -19,10 +19,12 @@ import ar.edu.utn.frbb.tup.model.Banco;
 import ar.edu.utn.frbb.tup.model.CuentaBancaria;
 import ar.edu.utn.frbb.tup.model.Recibo;
 import ar.edu.utn.frbb.tup.model.TipoEstadoTransfers;
+import ar.edu.utn.frbb.tup.model.TipoMoneda;
 import ar.edu.utn.frbb.tup.model.Transferencias;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentasIgualesException;
+import ar.edu.utn.frbb.tup.model.exceptions.MonedaNoCoincideException;
 import ar.edu.utn.frbb.tup.model.exceptions.MontoNoValidoException;
 import ar.edu.utn.frbb.tup.model.exceptions.SaldoNoValidoException;
 import ar.edu.utn.frbb.tup.persistence.imp.CuentaBancariaDaoImp;
@@ -64,7 +66,7 @@ public class TransferenciasServiceTest {
     }
 
     @Test
-    public void testTransferirSaldoInsuficiente() throws CuentaNoExisteException, CuentasIgualesException, MontoNoValidoException, SaldoNoValidoException, ClienteNoExisteException {
+    public void testTransferirSaldoInsuficiente() throws CuentaNoExisteException, CuentasIgualesException, MontoNoValidoException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException {
         TransferenciasDto transferenciasDto = new TransferenciasDto();
         transferenciasDto.setCuentaOrigen(11222333L);
         transferenciasDto.setCuentaDestino(44555666L);
@@ -83,7 +85,7 @@ public class TransferenciasServiceTest {
     }
 
     @Test
-    public void testTransferirExitosamenteEntreBancos() throws CuentaNoExisteException, CuentasIgualesException, MontoNoValidoException, SaldoNoValidoException, ClienteNoExisteException{
+    public void testTransferirExitosamenteEntreBancos() throws CuentaNoExisteException, CuentasIgualesException, MontoNoValidoException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException{
         TransferenciasDto transferenciasDto = new TransferenciasDto();
         transferenciasDto.setCuentaOrigen(11222333L);
         transferenciasDto.setCuentaDestino(44555666L);
@@ -92,6 +94,7 @@ public class TransferenciasServiceTest {
 
         CuentaBancaria cuenta = new CuentaBancaria();
         cuenta.setSaldo(400000f);
+        cuenta.setMoneda(TipoMoneda.DOLARES);
 
         when(cuentaBancariaDao.getCuentaBancariaById(transferenciasDto.getCuentaOrigen())).thenReturn(cuenta);
         when(banco.getLimiteSobregiro()).thenReturn(100000f);
@@ -103,7 +106,7 @@ public class TransferenciasServiceTest {
     }
 
     @Test
-    public void testTransferirExitosamenteEnBanco() throws CuentaNoExisteException, CuentasIgualesException, MontoNoValidoException, SaldoNoValidoException, ClienteNoExisteException{
+    public void testTransferirExitosamenteEnBanco() throws CuentaNoExisteException, CuentasIgualesException, MontoNoValidoException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException{
         TransferenciasDto transferenciasDto = new TransferenciasDto();
         transferenciasDto.setCuentaOrigen(11222333L);
         transferenciasDto.setCuentaDestino(44555666L);
@@ -112,6 +115,7 @@ public class TransferenciasServiceTest {
 
         CuentaBancaria cuenta = new CuentaBancaria();
         cuenta.setSaldo(400000f);
+        cuenta.setMoneda(TipoMoneda.DOLARES);
 
         when(cuentaBancariaDao.getCuentaBancariaById(transferenciasDto.getCuentaOrigen())).thenReturn(cuenta);
         when(banco.getLimiteSobregiro()).thenReturn(100000f);

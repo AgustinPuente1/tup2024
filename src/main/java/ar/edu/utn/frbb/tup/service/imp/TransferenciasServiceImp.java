@@ -16,6 +16,7 @@ import ar.edu.utn.frbb.tup.model.Transferencias;
 import ar.edu.utn.frbb.tup.model.exceptions.ClienteNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentaNoExisteException;
 import ar.edu.utn.frbb.tup.model.exceptions.CuentasIgualesException;
+import ar.edu.utn.frbb.tup.model.exceptions.MonedaNoCoincideException;
 import ar.edu.utn.frbb.tup.model.exceptions.MontoNoValidoException;
 import ar.edu.utn.frbb.tup.model.exceptions.SaldoNoValidoException;
 import ar.edu.utn.frbb.tup.persistence.CuentaBancariaDao;
@@ -43,7 +44,7 @@ public class TransferenciasServiceImp implements TransferenciasService {
     }
 
     @Override
-    public Recibo crearTransferencia(TransferenciasDto transferenciasDto) throws CuentasIgualesException, MontoNoValidoException, CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException {
+    public Recibo crearTransferencia(TransferenciasDto transferenciasDto) throws CuentasIgualesException, MontoNoValidoException, CuentaNoExisteException, SaldoNoValidoException, ClienteNoExisteException, MonedaNoCoincideException {
         //Excepciones iniciales 
         if (transferenciasDto.getCuentaOrigen() == transferenciasDto.getCuentaDestino()) {
             throw new CuentasIgualesException("La cuenta de origen no puede ser igual a la cuenta de destino");
@@ -62,9 +63,10 @@ public class TransferenciasServiceImp implements TransferenciasService {
             return recibo;
         }
 
+        CuentaBancaria cuentaDestino = new CuentaBancaria();
         //Comprobar como será la transferencia
         try {
-            cuentaBancariaDao.getCuentaBancariaById(transferenciasDto.getCuentaDestino());
+            cuentaDestino = cuentaBancariaDao.getCuentaBancariaById(transferenciasDto.getCuentaDestino());
             tranferEntreBancos = false;
         } catch(CuentaNoExisteException e) {
             tranferEntreBancos = true;
@@ -79,6 +81,13 @@ public class TransferenciasServiceImp implements TransferenciasService {
 
         //Caso de transferencia exitosa
         Transferencias transferencia = sacarComision(new Transferencias(transferenciasDto));
+        if (!tranferEntreBancos){
+            if (cuentaOrigen.getMoneda() != cuentaDestino.getMoneda() 
+                    || transferencia.getMoneda() != cuentaOrigen.getMoneda()
+                    || transferencia.getMoneda() != cuentaDestino.getMoneda()) {
+                throw new MonedaNoCoincideException("La moneda no coincide");
+            }
+        }
 
         if (tranferEntreBancos) {
             transferenciasDao.transferBetweenBanks(transferencia);
@@ -134,5 +143,10 @@ public class TransferenciasServiceImp implements TransferenciasService {
                 return true;
             }
         }
+    }
+
+    @Override
+    public void borrarAllTransferencias(){
+        transferenciasDao.deleteTransfers();
     }
 }

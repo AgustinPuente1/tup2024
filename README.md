@@ -32,16 +32,16 @@ COMPLETE:
 -hacer que las monedas coincidan en depositos y retiros
 -Hacer que en requestBody pueda ser USD o dolares o minusculas y mayus
 -HACER QUE CUANDO DELETEO UN CLIENTE TAMBIEN BORRE CUENTAS
-
-
-In progress:
 -Transferencias controller, service y dao
 -Validar que no te mandes plata a tu propia cuenta (SERVICE)
 -Test transferencias
+-TRANSFER EN BANCO NO MODIFICA AL QUE PAGA
+
+In progress:
+-ACTUALIZAR CLIENTE BORRA CUENTAS, ClienteServiceImp Line 69
 
 To do List:
 -Hacer que los exception de service sean validator
--ACTUALIZAR CLIENTE BORRA CUENTAS, ClienteServiceImp Line 69
 -test controllers
 -Todo Transacciones
 -COMENTAR Y DOCUMENTAR EL PROYECTO

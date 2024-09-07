@@ -12,4 +12,6 @@ public interface TransferenciasDao {
     void transferBetweenBanks(Transferencias transferencia) throws ClienteNoExisteException;
 
     void transferInBank(Transferencias transferencia) throws ClienteNoExisteException;
+
+    void deleteTransfers();
 }
